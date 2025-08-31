@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mod Manager Text (MMT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    
+    
+    <style type="text/css">@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}</style>
+    <style>
+        :root {
+            --bg-primary: #111827; --bg-secondary: #1f2937; --bg-glass: rgba(31, 41, 55, 0.6);
+            --text-primary: #f9fafb; --text-secondary: #d1d5db; --text-accent: #38bdf8; --text-muted: #6b7280;
+            --border-color: #374151; --separator-bg: #1e40af; --separator-text: #60a5fa;
+            --group-bg: #1f2937; --group-text: #2dd4bf; --button-delete: #f43f5e;
+            --progress-bar-bg: #374151; --progress-bar-fill: #16a34a;
+            --req-tag-bg: #374151; --req-tag-text: #a7f3d0; --req-tag-inactive-bg: #7f1d1d; --req-tag-inactive-text: #fecaca;
+            --selection-bg: rgba(56, 189, 248, 0.3);
+            --graph-node-text: #f9fafb;
+        }
+        .theme-light {
+            --bg-primary: #f3f4f6; --bg-secondary: #ffffff; --bg-glass: rgba(255, 255, 255, 0.7);
+            --text-primary: #111827; --text-secondary: #374151; --text-accent: #0284c7; --text-muted: #6b7280;
+            --border-color: #e5e7eb; --separator-bg: #dbeafe; --separator-text: #2563eb;
+            --group-bg: #f9fafb; --group-text: #0d9488;
+            --progress-bar-bg: #e5e7eb; --progress-bar-fill: #22c55e;
+            --req-tag-bg: #d1fae5; --req-tag-text: #065f46; --req-tag-inactive-bg: #fee2e2; --req-tag-inactive-text: #991b1b;
+            --selection-bg: rgba(2, 132, 199, 0.3);
+            --graph-node-text: #111827;
+        }
+        .theme-slate {
+            --bg-primary: #0f172a; --bg-secondary: #1e293b; --bg-glass: rgba(30, 41, 59, 0.6);
+            --text-primary: #f8fafc; --text-secondary: #cbd5e1; --text-accent: #f472b6; --text-muted: #64748b;
+            --border-color: #334155; --separator-bg: #1e293b; --separator-text: #7dd3fc;
+            --group-bg: #1e293b; --group-text: #5eead4;
+            --progress-bar-bg: #334155; --progress-bar-fill: #4ade80;
+            --req-tag-bg: #1e293b; --req-tag-text: #a7f3d0; --req-tag-inactive-bg: #450a0a; --req-tag-inactive-text: #fca5a5;
+            --selection-bg: rgba(244, 114, 182, 0.3);
+            --graph-node-text: #f8fafc;
+        }
+        .theme-light-slate {
+            --bg-primary: #f1f5f9; --bg-secondary: #ffffff; --bg-glass: rgba(255, 255, 255, 0.7);
+            --text-primary: #0f172a; --text-secondary: #334155; --text-accent: #ec4899; --text-muted: #64748b;
+            --border-color: #e2e8f0; --separator-bg: #f1f5f9; --separator-text: #c026d3;
+            --group-bg: #ffffff; --group-text: #be185d;
+            --progress-bar-bg: #e2e8f0; --progress-bar-fill: #ec4899;
+            --req-tag-bg: #fce7f3; --req-tag-text: #9d174d; --req-tag-inactive-bg: #fee2e2; --req-tag-inactive-text: #991b1b;
+            --selection-bg: rgba(236, 72, 153, 0.3);
+            --graph-node-text: #0f172a;
+        }
+        .theme-royal {
+            --bg-primary: #2c1f43; --bg-secondary: #402e5f; --bg-glass: rgba(64, 46, 95, 0.6);
+            --text-primary: #f3e8ff; --text-secondary: #d8b4fe; --text-accent: #fcd34d; --text-muted: #a881e8;
+            --border-color: #5b4684; --separator-bg: #402e5f; --separator-text: #fcd34d;
+            --group-bg: #402e5f; --group-text: #f5d37a;
+            --progress-bar-bg: #5b4684; --progress-bar-fill: #fcd34d;
+            --req-tag-bg: #5b4684; --req-tag-text: #fde68a; --req-tag-inactive-bg: #7f1d1d; --req-tag-inactive-text: #fecaca;
+            --selection-bg: rgba(252, 211, 77, 0.3);
+            --graph-node-text: #f3e8ff;
+        }
+        .theme-sakura {
+            --bg-primary: #fffbff; --bg-secondary: #ffffff; --bg-glass: rgba(255, 255, 255, 0.7);
+            --text-primary: #5c474d; --text-secondary: #745c63; --text-accent: #f472b6; --text-muted: #a1888e;
+            --border-color: #fce7f3; --separator-bg: #fce7f3; --separator-text: #db2777;
+            --group-bg: #ffffff; --group-text: #e11d48;
+            --progress-bar-bg: #fce7f3; --progress-bar-fill: #f472b6;
+            --req-tag-bg: #fce7f3; --req-tag-text: #db2777; --req-tag-inactive-bg: #fee2e2; --req-tag-inactive-text: #991b1b;
+            --selection-bg: rgba(244, 114, 182, 0.3);
+            --graph-node-text: #5c474d;
+        }
+        .theme-bimbo {
+            --bg-primary: #fdf2f8; --bg-secondary: #fff; --bg-glass: rgba(255, 255, 255, 0.7);
+            --text-primary: #831843; --text-secondary: #9d174d; --text-accent: #f43f5e; --text-muted: #be185d;
+            --border-color: #fbcfe8; --separator-bg: #fbcfe8; --separator-text: #e11d48;
+            --group-bg: #fff; --group-text: #f43f5e;
+            --progress-bar-bg: #fbcfe8; --progress-bar-fill: #f43f5e;
+            --req-tag-bg: #fbcfe8; --req-tag-text: #9d174d; --req-tag-inactive-bg: #fee2e2; --req-tag-inactive-text: #991b1b;
+            --selection-bg: rgba(244, 63, 94, 0.3);
+            --graph-node-text: #831843;
+        }
+        .theme-synthwave {
+            --bg-primary: #0d0221; --bg-secondary: #240b36; --bg-glass: rgba(36, 11, 54, 0.6);
+            --text-primary: #f0f8ff; --text-secondary: #c77dff; --text-accent: #00f5d4; --text-muted: #a259ff;
+            --border-color: #3c1a4d; --separator-bg: #240b36; --separator-text: #ff206e;
+            --group-bg: #240b36; --group-text: #00f5d4;
+            --progress-bar-bg: #3c1a4d; --progress-bar-fill: #00f5d4;
+            --req-tag-bg: #3c1a4d; --req-tag-text: #00f5d4; --req-tag-inactive-bg: #ff206e; --req-tag-inactive-text: #f0f8ff;
+            --selection-bg: rgba(0, 245, 212, 0.3);
+            --graph-node-text: #f0f8ff;
+        }
+        .theme-ocean {
+            --bg-primary: #0c2d48; --bg-secondary: #145da0; --bg-glass: rgba(20, 93, 160, 0.6);
+            --text-primary: #e0fbfc; --text-secondary: #98c1d9; --text-accent: #2e8bc0; --text-muted: #b1d4e0;
+            --border-color: #145da0; --separator-bg: #0c2d48; --separator-text: #e0fbfc;
+            --group-bg: #145da0; --group-text: #e0fbfc;
+            --progress-bar-bg: #0c2d48; --progress-bar-fill: #2e8bc0;
+            --req-tag-bg: #145da0; --req-tag-text: #e0fbfc; --req-tag-inactive-bg: #7f1d1d; --req-tag-inactive-text: #fecaca;
+            --selection-bg: rgba(46, 139, 192, 0.4);
+            --graph-node-text: #e0fbfc;
+        }
+        .theme-sunset {
+            --bg-primary: #2c0703; --bg-secondary: #6b211e; --bg-glass: rgba(107, 33, 30, 0.6);
+            --text-primary: #fde68a; --text-secondary: #fca5a5; --text-accent: #f97316; --text-muted: #f87171;
+            --border-color: #6b211e; --separator-bg: #2c0703; --separator-text: #fde68a;
+            --group-bg: #6b211e; --group-text: #fde68a;
+            --progress-bar-bg: #2c0703; --progress-bar-fill: #f97316;
+            --req-tag-bg: #6b211e; --req-tag-text: #fde68a; --req-tag-inactive-bg: #4c1d95; --req-tag-inactive-text: #ddd6fe;
+            --selection-bg: rgba(249, 115, 22, 0.4);
+            --graph-node-text: #fde68a;
+        }
+        .theme-forest {
+            --bg-primary: #1a2e05; --bg-secondary: #365314; --bg-glass: rgba(54, 83, 20, 0.6);
+            --text-primary: #d4d4d4; --text-secondary: #a3a3a3; --text-accent: #84cc16; --text-muted: #a3a3a3;
+            --border-color: #365314; --separator-bg: #1a2e05; --separator-text: #d4d4d4;
+            --group-bg: #365314; --group-text: #d4d4d4;
+            --progress-bar-bg: #1a2e05; --progress-bar-fill: #84cc16;
+            --req-tag-bg: #365314; --req-tag-text: #d4d4d4; --req-tag-inactive-bg: #7f1d1d; --req-tag-inactive-text: #fecaca;
+            --selection-bg: rgba(132, 204, 22, 0.4);
+            --graph-node-text: #d4d4d4;
+        }
+        .theme-monochrome {
+            --bg-primary: #ffffff; --bg-secondary: #f1f5f9; --bg-glass: rgba(241, 245, 249, 0.7);
+            --text-primary: #020617; --text-secondary: #334155; --text-accent: #020617; --text-muted: #64748b;
+            --border-color: #cbd5e1; --separator-bg: #020617; --separator-text: #ffffff;
+            --group-bg: #f1f5f9; --group-text: #020617;
+            --progress-bar-bg: #e2e8f0; --progress-bar-fill: #020617;
+            --req-tag-bg: #e2e8f0; --req-tag-text: #020617; --req-tag-inactive-bg: #fee2e2; --req-tag-inactive-text: #991b1b;
+            --selection-bg: rgba(100, 116, 139, 0.3);
+            --graph-node-text: #020617;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 10px; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(10px); border: 1px solid var(--border-color); }
+        .toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: 30px; opacity: 0; transition: opacity 0.3s, visibility 0.3s, bottom 0.3s; }
+        .toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+        .modal-overlay, .item-options-menu { display: none; }
+        .drag-handle { cursor: grab; }
+        .sortable-ghost { background: var(--bg-secondary); opacity: 0.7; border: 1px dashed var(--text-accent); }
+        .sortable-drag { opacity: 0; } /* Hide the original dragged item */
+        [contenteditable]:focus { outline: 2px solid var(--text-accent); background-color: var(--bg-secondary); border-radius: 4px; padding: 0 2px; }
+        .row-item.is-separator { background-color: var(--separator-bg); color: var(--separator-text); }
+        .row-item.is-group { background-color: var(--group-bg); }
+        .row-item.is-selected { background-color: var(--selection-bg); }
+        .row-item .expand-toggle { transition: transform 0.2s; }
+        .row-item.is-collapsed .expand-toggle { transform: rotate(-90deg); }
+        .progress-bar { background-color: var(--progress-bar-bg); border-radius: 9999px; overflow: hidden; }
+        .progress-bar-fill { background-color: var(--progress-bar-fill); height: 100%; border-radius: 9999px; transition: width 0.3s ease; }
+        .resize-handle { position: absolute; top: 0; right: -2px; width: 4px; height: 100%; cursor: col-resize; z-index: 10; }
+        .resize-handle:hover { background-color: var(--text-accent); }
+        .grid-table { display: grid; }
+        #graph-view { cursor: grab; }
+        #graph-tooltip {
+            display: none;
+            position: absolute;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="antialiased p-8">
+
+    <div class="flex flex-col h-[calc(100vh-4rem)]">
+        <!-- Header and Controls -->
+        <div class="flex justify-between items-center mb-6 flex-shrink-0">
+            <header class="text-left">
+                <h1 class="text-4xl font-bold" style="color: var(--text-accent);">Mod Manager Text (MMT)</h1>
+                <p style="color: var(--text-secondary);" class="mt-2">A customizable, text-based list manager.</p>
+            </header>
+            <div class="relative flex items-center gap-2">
+                <button id="view-toggle-btn" title="Toggle View" class="p-3 rounded-lg transition duration-300" style="background-color: var(--bg-secondary); color: var(--text-secondary);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                </button>
+                <button id="columns-btn" title="Manage Columns" class="p-3 rounded-lg transition duration-300" style="background-color: var(--bg-secondary); color: var(--text-secondary);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2m0 10V7m0 10a2 2 0 012 2h2a2 2 0 012-2V7a2 2 0 01-2-2h-2a2 2 0 01-2 2m0 10V7" /></svg>
+                </button>
+                <button id="settings-btn" title="Settings" class="p-3 rounded-lg transition duration-300" style="background-color: var(--bg-secondary); color: var(--text-secondary);">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </button>
+                 <button id="new-list-btn" class="font-bold py-3 px-5 rounded-lg transition duration-300" style="background-color: var(--text-accent); color: var(--bg-primary);">New List</button>
+                 <button id="import-btn" class="font-bold py-3 px-5 rounded-lg transition duration-300" style="background-color: var(--text-accent); color: var(--bg-primary);">Import</button>
+                 <button id="export-btn" class="font-bold py-3 px-5 rounded-lg transition duration-300" style="background-color: var(--text-accent); color: var(--bg-primary);">Export</button>
+                 <input type="file" id="import-file-input" class="hidden" accept=".json">
+            </div>
+        </div>
+
+        <!-- Main Mod Management Area -->
+        <div id="main-content-area" class="glass-effect p-6 rounded-2xl shadow-lg flex flex-col flex-grow relative">
+            <div id="list-view" class="flex flex-col h-full">
+                <div class="flex justify-between items-center mb-4 border-b pb-3 flex-shrink-0" style="border-color: var(--border-color);">
+                    <div class="flex items-center">
+                        <h2 class="text-2xl font-semibold" style="color: var(--text-primary);">Mod List:</h2>
+                        <span id="current-list-name" class="text-2xl font-semibold ml-2" style="color: var(--text-accent);" contenteditable="true"></span>
+                    </div>
+                    <div id="action-buttons" class="flex items-center gap-4">
+                         <div id="item-count-container" class="flex gap-2 text-xs"></div>
+                         <button id="add-separator-btn" class="font-bold py-2 px-4 rounded-lg text-sm" style="background-color: var(--text-accent); color: var(--bg-primary);">Add Separator</button>
+                         <button id="add-group-btn" class="font-bold py-2 px-4 rounded-lg text-sm" style="background-color: var(--text-accent); color: var(--bg-primary);">Add Group</button>
+                         <button id="add-mod-btn" class="font-bold py-2 px-4 rounded-lg text-sm" style="background-color: var(--text-accent); color: var(--bg-primary);">Add Mod</button>
+                    </div>
+                </div>
+
+                <!-- Scrollable Container -->
+                <div class="overflow-auto flex-grow">
+                    <!-- Header Row -->
+                    <div id="list-header" class="grid-table px-2 py-2 font-semibold text-sm sticky top-0 z-10" style="color: var(--text-muted); background-color: var(--bg-primary);">
+                    </div>
+                    
+                    <div id="mod-list-container">
+                        <p id="empty-list-message" class="text-center py-16" style="color: var(--text-muted);">This profile is empty. Add an item to start.</p>
+                    </div>
+                </div>
+            </div>
+            <canvas id="graph-view" class="absolute top-0 left-0 w-full h-full rounded-2xl hidden"></canvas>
+            <div id="graph-tooltip" class="glass-effect rounded-lg p-3 text-sm shadow-lg max-w-xs"></div>
+        </div>
+    </div>
+    
+    <div id="toast-notification" class="toast"></div>
+    <div id="settings-modal" class="modal-overlay fixed inset-0 z-40 items-center justify-center bg-black bg-opacity-70"></div>
+    <div id="confirmation-modal" class="modal-overlay fixed inset-0 z-40 items-center justify-center bg-black bg-opacity-70"></div>
+    <div id="req-modal" class="modal-overlay fixed inset-0 z-40 items-center justify-center bg-black bg-opacity-70"></div>
+    <div id="move-to-group-modal" class="modal-overlay fixed inset-0 z-40 items-center justify-center bg-black bg-opacity-70"></div>
+    <div id="color-picker-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-70"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- UI Elements ---
+        const listView = document.getElementById('list-view');
+        const graphView = document.getElementById('graph-view');
+        const viewToggleBtn = document.getElementById('view-toggle-btn');
+        const listContainer = document.getElementById('mod-list-container');
+        const headerContainer = document.getElementById('list-header');
+        const emptyMessage = document.getElementById('empty-list-message');
+        const itemCountContainer = document.getElementById('item-count-container');
+        const currentListNameEl = document.getElementById('current-list-name');
+        const addModBtn = document.getElementById('add-mod-btn');
+        const addGroupBtn = document.getElementById('add-group-btn');
+        const addSeparatorBtn = document.getElementById('add-separator-btn');
+        const settingsBtn = document.getElementById('settings-btn');
+        const columnsBtn = document.getElementById('columns-btn');
+        const newListBtn = document.getElementById('new-list-btn');
+        const importBtn = document.getElementById('import-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const importFileInput = document.getElementById('import-file-input');
+        const toast = document.getElementById('toast-notification');
+        const confirmationModalContainer = document.getElementById('confirmation-modal');
+        const settingsModalContainer = document.getElementById('settings-modal');
+        const reqModalContainer = document.getElementById('req-modal');
+        const moveToGroupModalContainer = document.getElementById('move-to-group-modal');
+        const colorPickerModalContainer = document.getElementById('color-picker-modal');
+        const graphTooltip = document.getElementById('graph-tooltip');
+
+        // --- State Management ---
+        const DATA_STORAGE_KEY = 'modManagerData_v29';
+        const SETTINGS_STORAGE_KEY = 'modProfileManagerSettings_v3'; 
+        let data = [];
+        let nextId = 1;
+        let listName = 'Default';
+        let columnWidths = {};
+        let columnOrder = [];
+        let sortableInstance;
+        let itemMap = new Map();
+        let currentView = 'list';
+        let selectedItems = new Set();
+        let isMultiDragging = false;
+        
+        // --- Graph State (Global to avoid reset on re-render) ---
+        let graphState = {
+            ctx: null,
+            cameraOffset: { x: 0, y: 0 },
+            cameraZoom: 1,
+            isPanning: false,
+            panStart: { x: 0, y: 0 },
+            draggedNode: null,
+            hoveredNode: null,
+            nodes: [],
+            nodeMapForLayout: new Map(),
+            childToParentMap: new Map(),
+            animationFrameId: null
+        };
+
+
+        // --- Core Functions ---
+        const saveState = () => {
+            const cleanedData = JSON.parse(JSON.stringify(data));
+            localStorage.setItem(DATA_STORAGE_KEY, JSON.stringify({ listName, items: cleanedData, nextId }));
+        };
+
+        const loadState = () => {
+            const saved = JSON.parse(localStorage.getItem(DATA_STORAGE_KEY));
+            if (saved) {
+                listName = saved.listName || 'Default';
+                data = saved.items || [];
+                nextId = saved.nextId || (getAllItems(data).filter(i => i.id).length > 0 ? Math.max(...getAllItems(data).filter(i => i.id).map(i => i.id)) + 1 : 1);
+            } else {
+                data = [];
+                nextId = 1;
+                listName = 'Default';
+            }
+        };
+
+        const render = () => {
+            buildItemMap();
+            if (currentView === 'list') {
+                renderHeader();
+                renderList();
+            } else {
+                renderGraph();
+            }
+            updateItemCount();
+            currentListNameEl.textContent = listName;
+        };
+
+        const buildItemMap = () => {
+            itemMap.clear();
+            getAllItems(data).forEach(item => {
+                if(item.id) itemMap.set(item.id, item);
+            });
+        };
+
+        const renderHeader = () => {
+            const columnDefinitions = {
+                'index': { name: '#', width: 48, resizable: false, deletable: false },
+                'options': { name: '', width: 40, resizable: false, deletable: false },
+                'drag': { name: '', width: 40, resizable: false, deletable: false },
+                'color': { name: '', width: 32, resizable: false, deletable: false },
+                'enabled': { name: 'Enabled', width: 64, resizable: true, deletable: true },
+                'name': { name: 'Name', width: 256, resizable: true, deletable: true },
+                'size': { name: 'Size', width: 96, resizable: true, deletable: true },
+                'date': { name: 'Update Date', width: 128, resizable: true, deletable: true },
+                'url': { name: 'URL', width: 192, resizable: true, deletable: true },
+                'type': { name: 'Type', width: 96, resizable: true, deletable: true },
+                'note': { name: 'Note', width: 192, resizable: true, deletable: true },
+                'progress': { name: 'Progress', width: 128, resizable: true, deletable: true },
+                'references': { name: 'References', width: 192, resizable: true, deletable: true },
+                'requirements': { name: 'Requirements', width: 0, grow: true, resizable: false, deletable: false }
+            };
+            
+            const gridTemplateColumns = columnOrder.map(key => {
+                const col = columnDefinitions[key] || { grow: true };
+                return col.grow ? '1fr' : `${columnWidths[key]}px`;
+            }).join(' ');
+
+            headerContainer.style.gridTemplateColumns = gridTemplateColumns;
+            headerContainer.innerHTML = '';
+
+            columnOrder.forEach((key) => {
+                const col = columnDefinitions[key] || { name: key, width: 150, resizable: true, deletable: true, custom: true };
+                const colEl = document.createElement('div');
+                colEl.className = 'text-center flex-shrink-0 relative px-1 flex items-center justify-center';
+                colEl.textContent = col.name;
+                colEl.dataset.key = key;
+
+                if (col.grow) {
+                    colEl.style.flexGrow = '1';
+                } else {
+                    colEl.style.width = `${columnWidths[key]}px`;
+                }
+
+                if (col.resizable) {
+                    const handle = document.createElement('div');
+                    handle.className = 'resize-handle';
+                    colEl.appendChild(handle);
+
+                    handle.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        const startX = e.pageX;
+                        const startWidth = colEl.offsetWidth;
+
+                        const doDrag = (e) => {
+                            const newWidth = startWidth + (e.pageX - startX);
+                            if (newWidth > 30) {
+                                columnWidths[key] = newWidth;
+                                render();
+                            }
+                        };
+
+                        const stopDrag = () => {
+                            document.removeEventListener('mousemove', doDrag);
+                            document.removeEventListener('mouseup', stopDrag);
+                            const settings = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY)) || {};
+                            settings.columnWidths = columnWidths;
+                            localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+                        };
+
+                        document.addEventListener('mousemove', doDrag);
+                        document.addEventListener('mouseup', stopDrag);
+                    });
+                }
+                headerContainer.appendChild(colEl);
+            });
+            new Sortable(headerContainer, {
+                animation: 150,
+                onEnd: (evt) => {
+                    const movedItem = columnOrder.splice(evt.oldIndex, 1)[0];
+                    columnOrder.splice(evt.newIndex, 0, movedItem);
+                    const settings = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY)) || {};
+                    settings.columnOrder = columnOrder;
+                    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+                    render();
+                }
+            });
+        };
+
+        const renderList = () => {
+            listContainer.innerHTML = '';
+            if (data.length === 0) {
+                listContainer.appendChild(emptyMessage);
+                emptyMessage.style.display = 'block';
+            } else {
+                emptyMessage.style.display = 'none';
+                let isHiddenBySeparator = false;
+                let visibleIndex = 1;
+                
+                const renderRecursive = (items, isTopLevel) => {
+                    items.forEach(item => {
+                        if (!item) return;
+
+                        if (isTopLevel) {
+                            if (isHiddenBySeparator && item.type !== 'separator') {
+                                return; 
+                            }
+                            if (item.type === 'separator') {
+                                isHiddenBySeparator = !item.isExpanded;
+                            }
+                        }
+
+                        const indexToShow = (isTopLevel && item.type !== 'separator') ? visibleIndex : '';
+                        const row = createRowElement(item, indexToShow, isTopLevel);
+                        
+                        if(isTopLevel) {
+                            row.classList.add('top-level-item');
+                        }
+
+                        if (!isTopLevel) {
+                             row.style.paddingLeft = `2rem`;
+                        }
+
+                        listContainer.appendChild(row);
+
+                        if (isTopLevel && item.type !== 'separator') visibleIndex++;
+
+                        if (item.type === 'group' && item.isExpanded && item.children && item.children.length > 0) {
+                            renderRecursive(item.children, false);
+                        }
+                    });
+                };
+
+                renderRecursive(data, true);
+            }
+            initializeSortable();
+        };
+
+        const createRowElement = (item, index, isTopLevel) => {
+            const row = document.createElement('div');
+            row.className = `row-item items-center px-2 py-2 rounded-lg mb-2 relative ${item.isExpanded === false ? 'is-collapsed' : ''}`;
+            if (selectedItems.has(item.id)) {
+                row.classList.add('is-selected');
+            }
+            row.dataset.internalId = item.id;
+            
+            let content = '';
+
+            switch(item.type) {
+                case 'mod':
+                    row.classList.add('grid-table');
+                    row.style.backgroundColor = selectedItems.has(item.id) ? 'var(--selection-bg)' : 'var(--bg-secondary)';
+                    content = createModHTML(item, index, isTopLevel);
+                    break;
+                case 'group':
+                    row.classList.add('grid-table', 'is-group');
+                     row.style.backgroundColor = selectedItems.has(item.id) ? 'var(--selection-bg)' : 'var(--group-bg)';
+                    content = createGroupHTML(item, index, isTopLevel);
+                    break;
+                case 'separator':
+                    row.classList.add('is-separator', 'flex');
+                    content = createSeparatorHTML(item, isTopLevel);
+                    break;
+            }
+
+            if (item.type !== 'separator') {
+                 const gridTemplateColumns = columnOrder.map(key => {
+                    const col = { 'requirements': { grow: true } }[key];
+                    return col?.grow ? '1fr' : `${columnWidths[key]}px`;
+                }).join(' ');
+                row.style.gridTemplateColumns = gridTemplateColumns;
+            }
+            
+            row.innerHTML = content;
+            
+            // --- Event listeners ---
+            row.addEventListener('click', (e) => handleItemClick(e, item));
+            row.querySelector('.options-btn')?.addEventListener('click', (e) => { e.stopPropagation(); showOptionsMenu(e.currentTarget, item); });
+            row.querySelector('.expand-toggle')?.addEventListener('click', (e) => { e.stopPropagation(); toggleExpanded(item); });
+            
+            row.querySelectorAll('[contenteditable]').forEach(el => {
+                const property = el.dataset.property;
+                const customKey = el.dataset.customKey;
+                el.addEventListener('blur', () => {
+                    const newContent = el.textContent.trim();
+                    if (customKey) {
+                        if (!item.customData) item.customData = {};
+                        if (item.customData[customKey] !== newContent) {
+                            item.customData[customKey] = newContent;
+                            saveState();
+                        }
+                    } else if (item[property] !== newContent) {
+                        item[property] = newContent;
+                        saveState();
+                    }
+                });
+                el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
+            });
+
+            row.querySelectorAll('input[type="checkbox"][data-mod-type]').forEach(cb => {
+                cb.addEventListener('change', () => {
+                    if(!item.modType) item.modType = {};
+                    item.modType[cb.dataset.modType] = cb.checked;
+                    saveState();
+                });
+            });
+
+            const mainCheckbox = row.querySelector('input[type="checkbox"].main-toggle');
+            if (mainCheckbox) {
+                mainCheckbox.addEventListener('change', () => {
+                    item.enabled = mainCheckbox.checked;
+                    if (item.type === 'group') {
+                        getAllItems(item.children).forEach(child => child.enabled = item.enabled);
+                    }
+                    saveState();
+                    render();
+                });
+            }
+            row.querySelector('.add-req-btn')?.addEventListener('click', () => showReqModal(item));
+
+            return row;
+        };
+        
+        const getGroupRequirements = (group) => {
+            const reqs = new Set();
+            getAllItems(group.children).forEach(child => {
+                if (child.type === 'mod' && child.requirements) {
+                    child.requirements.forEach(reqId => reqs.add(reqId));
+                }
+            });
+            return Array.from(reqs);
+        };
+
+        const createCell = (key, content) => {
+            const grow = key === 'requirements';
+            return `<div class="flex items-center justify-center px-1 ${grow ? 'flex-grow' : 'flex-shrink-0'}" style="color: var(--text-secondary);">${content}</div>`;
+        };
+        
+        const createModHTML = (item, index, isTopLevel) => {
+            const cells = {
+                index: `<div class="text-center" style="color: var(--text-muted);">${index}</div>`,
+                options: `<button class="options-btn p-2 rounded-full"><svg class="w-5 h-5" style="color: var(--text-muted);" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg></button>`,
+                drag: isTopLevel ? `<div class="drag-handle text-xl select-none" style="color: var(--text-muted);">&#x2630;</div>` : `<div style="width: 40px;"></div>`,
+                color: `<div class="w-4 h-4 rounded-full" style="background-color: ${item.color || 'var(--text-muted)'};"></div>`,
+                enabled: `<input type="checkbox" ${item.enabled ? 'checked' : ''} class="main-toggle w-5 h-5 rounded" style="background-color: var(--bg-primary); border-color: var(--border-color);">`,
+                name: `<div contenteditable="true" data-property="name">${item.name}</div>`,
+                size: `<div contenteditable="true" data-property="size">${item.size || ''}</div>`,
+                date: `<div contenteditable="true" data-property="updateDate">${item.updateDate || ''}</div>`,
+                url: `<div class="truncate" contenteditable="true" data-property="url">${item.url || ''}</div>`,
+                type: `<div class="text-xs space-y-1">
+                    <label class="flex items-center gap-2"><input type="checkbox" data-mod-type="esl" ${item.modType?.esl ? 'checked' : ''}> ESL</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" data-mod-type="esp" ${item.modType?.esp ? 'checked' : ''}> ESP</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" data-mod-type="esm" ${item.modType?.esm ? 'checked' : ''}> ESM</label>
+                </div>`,
+                note: `<div contenteditable="true" data-property="note">${item.note || ''}</div>`,
+                progress: `<div class="progress-bar w-full h-4"><div class="progress-bar-fill" style="width: ${item.progress || 0}%;"></div></div>`,
+                references: `<div contenteditable="true" data-property="references">${item.references || ''}</div>`,
+                requirements: `<div class="flex items-center gap-2 flex-wrap">
+                    ${(item.requirements || []).map(reqId => {
+                        const reqItem = itemMap.get(reqId);
+                        const isActive = reqItem ? reqItem.enabled : false;
+                        const bgColor = isActive ? 'var(--req-tag-bg)' : 'var(--req-tag-inactive-bg)';
+                        const textColor = isActive ? 'var(--req-tag-text)' : 'var(--req-tag-inactive-text)';
+                        return `<span class="text-xs px-2 py-1 rounded-full" style="background-color: ${bgColor}; color: ${textColor};">${reqItem ? reqItem.name : 'Missing'}</span>`;
+                    }).join('')}
+                    <button class="add-req-btn text-xs rounded-full w-6 h-6 flex items-center justify-center" style="background-color: var(--text-accent); color: var(--bg-primary);">+</button>
+                </div>`
+            };
+            return columnOrder.map(key => createCell(key, cells[key] || `<div contenteditable="true" data-property="customData" data-custom-key="${key}">${item.customData?.[key] || ''}</div>`)).join('');
+        };
+
+        const createGroupHTML = (item, index, isTopLevel) => {
+            const groupReqs = getGroupRequirements(item);
+            const reqsHTML = groupReqs.map(reqId => {
+                const reqItem = itemMap.get(reqId);
+                const isActive = reqItem ? reqItem.enabled : false;
+                const bgColor = isActive ? 'var(--req-tag-bg)' : 'var(--req-tag-inactive-bg)';
+                const textColor = isActive ? 'var(--req-tag-text)' : 'var(--req-tag-inactive-text)';
+                return `<span class="text-xs px-2 py-1 rounded-full" style="background-color: ${bgColor}; color: ${textColor};">${reqItem ? reqItem.name : 'Missing'}</span>`;
+            }).join('');
+            
+             const cells = {
+                index: `<div class="text-center" style="color: var(--text-muted);">${index}</div>`,
+                options: `<button class="options-btn p-2 rounded-full"><svg class="w-5 h-5" style="color: var(--text-muted);" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg></button>`,
+                drag: isTopLevel ? `<div class="drag-handle text-xl select-none" style="color: var(--text-muted);">&#x2630;</div>` : `<div style="width: 40px;"></div>`,
+                color: `<div class="w-4 h-4 rounded-full" style="background-color: ${item.color || 'var(--text-muted)'};"></div>`,
+                enabled: `<input type="checkbox" ${item.enabled ? 'checked' : ''} class="main-toggle w-5 h-5 rounded" style="background-color: var(--bg-primary); border-color: var(--border-color);">`,
+                name: `<div class="font-bold flex items-center gap-2" style="color: var(--group-text);"><span class="expand-toggle cursor-pointer">&#9660;</span><span contenteditable="true" data-property="name">${item.name}</span></div>`,
+                size: `<div contenteditable="true" data-property="size">${item.size || ''}</div>`,
+                date: `<div contenteditable="true" data-property="updateDate">${item.updateDate || ''}</div>`,
+                url: `<div class="truncate" contenteditable="true" data-property="url">${item.url || ''}</div>`,
+                type: ``,
+                note: `<div contenteditable="true" data-property="note">${item.note || ''}</div>`,
+                progress: `<div class="progress-bar w-full h-4"><div class="progress-bar-fill" style="width: ${item.progress || 0}%;"></div></div>`,
+                references: `<div contenteditable="true" data-property="references">${item.references || ''}</div>`,
+                requirements: `<div class="flex items-center gap-2 flex-wrap">${reqsHTML}</div>`
+            };
+            return columnOrder.map(key => createCell(key, cells[key] || `<div contenteditable="true" data-property="customData" data-custom-key="${key}">${item.customData?.[key] || ''}</div>`)).join('');
+        };
+
+        const createSeparatorHTML = (item, isTopLevel) => {
+            const icon = item.isExpanded ? '&#9660;' : '&#9654;'; // Down or right arrow
+            return `
+                ${isTopLevel ? '<div class="drag-handle text-xl select-none pr-2" style="cursor: grab;">&#x2630;</div>' : '<div style="width: 40px;"></div>'}
+                <div class="font-bold flex items-center gap-2 flex-grow">
+                    <span class="expand-toggle cursor-pointer">${icon}</span>
+                    <span contenteditable="true" data-property="name">${item.name}</span>
+                </div>
+            `;
+        };
+        
+        // --- Item Manipulation ---
+        const addItem = (type) => {
+            let newItem;
+            const id = nextId++;
+            const defaultColors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#a1a1aa'];
+            const randomColor = defaultColors[Math.floor(Math.random() * defaultColors.length)];
+            const commonProps = { id, enabled: true, size: '1 MB', updateDate: new Date().toLocaleDateString(), url: 'https://example.com', modType: {esl:false, esp:false, esm:false}, note: 'A new item.', progress: 0, references: 'Ref #' + id, customData: {}, x: undefined, y: undefined, color: randomColor };
+            
+            switch(type) {
+                case 'mod': 
+                    newItem = { ...commonProps, type: 'mod', name: 'new_mod.jar', requirements: [] }; 
+                    break;
+                case 'group': 
+                    newItem = { ...commonProps, type: 'group', name: 'New Group', isExpanded: true, children: [] }; 
+                    break;
+                case 'separator': 
+                    newItem = { type: 'separator', id, name: 'New Section', isExpanded: true }; 
+                    break;
+            }
+            data.push(newItem);
+            saveState();
+            render();
+        };
+
+        const findItem = (identifier, arr = data) => {
+            const isById = typeof identifier !== 'object';
+            for (let i = 0; i < arr.length; i++) {
+                const item = arr[i];
+                if (!item) continue;
+                const match = isById ? item.id === identifier : item === identifier;
+                if (match) {
+                    return { item, parent: arr, index: i };
+                }
+                if (item.type === 'group' && Array.isArray(item.children)) {
+                    const found = findItem(identifier, item.children);
+                    if (found) return found;
+                }
+            }
+            return null;
+        };
+
+        const deleteItem = (itemToDelete) => {
+            const result = findItem(itemToDelete);
+            if (result) {
+                const { item, parent, index } = result;
+                if (item.type === 'group' && item.children && item.children.length > 0) {
+                    showConfirmationModal('Delete Group?', `This group contains ${item.children.length} item(s). Deleting the group will also delete all its contents. Are you sure?`, () => {
+                        parent.splice(index, 1);
+                        saveState();
+                        render();
+                    });
+                } else {
+                    parent.splice(index, 1);
+                    saveState();
+                    render();
+                }
+            } else {
+                console.error("Could not find item to delete:", itemToDelete);
+            }
+        };
+
+        const toggleExpanded = (item) => {
+            if (item.hasOwnProperty('isExpanded')) {
+                item.isExpanded = !item.isExpanded;
+                saveState();
+                renderList();
+            }
+        };
+
+        const getAllItems = (arr) => arr.reduce((acc, item) => {
+            if (item) {
+                acc.push(item);
+                if (item.type === 'group' && item.children) {
+                    acc.push(...getAllItems(item.children));
+                }
+            }
+            return acc;
+        }, []);
+
+        const updateItemCount = () => {
+            const allItems = getAllItems(data);
+            const modCount = allItems.filter(i => i.type === 'mod').length;
+            const groupCount = allItems.filter(i => i.type === 'group').length;
+            const activeCount = allItems.filter(i => i.enabled).length;
+            itemCountContainer.innerHTML = `
+                <span class="font-medium px-2 py-1 rounded-full" style="background-color: var(--bg-secondary); color: var(--text-secondary);">${modCount} Mods</span>
+                <span class="font-medium px-2 py-1 rounded-full" style="background-color: var(--bg-secondary); color: var(--text-secondary);">${groupCount} Groups</span>
+                <span class="font-medium px-2 py-1 rounded-full" style="background-color: var(--progress-bar-fill); color: var(--bg-primary);">${activeCount} Active</span>
+            `;
+        };
+
+        const handleItemClick = (event, item) => {
+            if (event.target.closest('button, input, [contenteditable], .drag-handle')) {
+                return;
+            }
+
+            event.preventDefault();
+            const itemId = item.id;
+
+            if (event.ctrlKey || event.metaKey) {
+                if (selectedItems.has(itemId)) {
+                    selectedItems.delete(itemId);
+                } else {
+                    selectedItems.add(itemId);
+                }
+            } else {
+                if (selectedItems.has(itemId) && selectedItems.size === 1) {
+                    selectedItems.clear();
+                } else {
+                    selectedItems.clear();
+                    selectedItems.add(itemId);
+                }
+            }
+            render();
+        };
+
+        // --- SortableJS ---
+        const initializeSortable = () => {
+            if (sortableInstance) {
+                sortableInstance.destroy();
+            }
+            sortableInstance = new Sortable(listContainer, {
+                draggable: '.top-level-item',
+                handle: '.drag-handle',
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                dragClass: 'sortable-drag',
+                onStart: handleDragStart,
+                onEnd: handleSortEnd,
+            });
+        };
+        
+        const handleDragStart = (evt) => {
+            const draggedItemId = parseInt(evt.item.dataset.internalId);
+            isMultiDragging = selectedItems.has(draggedItemId);
+        };
+
+        const handleSortEnd = (evt) => {
+            if (isMultiDragging) {
+                // --- Multi-drag logic ---
+                const movedItems = data.filter(item => selectedItems.has(item.id));
+                const remainingItems = data.filter(item => !selectedItems.has(item.id));
+
+                let targetIndex = -1;
+                let nextSibling = evt.item.nextElementSibling;
+                while (nextSibling && !nextSibling.classList.contains('top-level-item')) {
+                     nextSibling = nextSibling.nextElementSibling;
+                }
+
+                if(nextSibling) {
+                    const nextSiblingId = parseInt(nextSibling.dataset.internalId);
+                    targetIndex = remainingItems.findIndex(item => item.id === nextSiblingId);
+                }
+
+                if (targetIndex !== -1) {
+                    remainingItems.splice(targetIndex, 0, ...movedItems);
+                } else {
+                    remainingItems.push(...movedItems);
+                }
+                data = remainingItems;
+
+            } else {
+                // --- Single-drag logic ---
+                const [movedItem] = data.splice(evt.oldIndex, 1);
+                if (movedItem) {
+                    data.splice(evt.newIndex, 0, movedItem);
+                }
+            }
+
+            isMultiDragging = false;
+            selectedItems.clear();
+            saveState();
+            render();
+        };
+
+        // --- Options Menu ---
+        const showOptionsMenu = (button, item) => {
+            closeAllPopups();
+            const menu = document.createElement('div');
+            menu.className = 'item-options-menu glass-effect absolute left-10 top-full -mt-2 z-30 w-48 rounded-lg shadow-xl py-2';
+            
+            let options = `<button class="w-full text-left px-4 py-2 text-sm" style="color: var(--button-delete);" data-action="delete">Delete</button>`;
+            if (item.type === 'mod' || item.type === 'group') {
+                options += `<button class="w-full text-left px-4 py-2 text-sm" style="color: var(--text-secondary);" data-action="change-color">Change Color</button>`;
+            }
+            if (item.type === 'mod') {
+                options += `<button class="w-full text-left px-4 py-2 text-sm" style="color: var(--text-secondary);" data-action="move-to-group">Move to Group...</button>`;
+            }
+            if (item.type === 'mod' || item.type === 'group') {
+                 options += `<div class="px-4 py-2 text-sm" style="color: var(--text-secondary);"><span>Progress: </span><input type="range" min="0" max="100" value="${item.progress || 0}" class="w-full" data-action="set-progress"></div>`;
+            }
+            menu.innerHTML = options;
+
+            button.closest('.row-item').appendChild(menu);
+            menu.style.display = 'block';
+
+            menu.querySelector('[data-action="delete"]').addEventListener('click', () => deleteItem(item));
+            menu.querySelector('[data-action="move-to-group"]')?.addEventListener('click', () => showMoveToGroupModal([item]));
+            menu.querySelector('[data-action="change-color"]')?.addEventListener('click', () => showColorPicker(item));
+            const progressSlider = menu.querySelector('[data-action="set-progress"]');
+            if (progressSlider) {
+                progressSlider.addEventListener('input', (e) => {
+                    item.progress = e.target.value;
+                    const row = button.closest('.row-item');
+                    if(row) {
+                       const progressBar = row.querySelector('.progress-bar-fill');
+                       if(progressBar) progressBar.style.width = `${item.progress}%`;
+                    }
+                });
+                progressSlider.addEventListener('change', () => saveState());
+            }
+        };
+
+        // --- Modals, Popups, Theming ---
+        const closeAllPopups = () => {
+            document.querySelectorAll('.item-options-menu').forEach(m => m.remove());
+        };
+        const showToast = (message) => { toast.textContent = message; toast.className = "toast show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); };
+        const showModal = (modalEl, content) => { closeAllPopups(); modalEl.innerHTML = content; modalEl.style.display = 'flex'; };
+        const hideModal = (modalEl) => { modalEl.style.display = 'none'; modalEl.innerHTML = ''; };
+        const showConfirmationModal = (title, text, onConfirm) => {
+            const content = `<div class="glass-effect rounded-2xl p-8 shadow-lg max-w-sm w-full mx-4" style="color: var(--text-primary);">
+                <h3 class="text-xl font-bold text-center mb-4">${title}</h3><p class="text-center mb-6" style="color: var(--text-secondary);">${text}</p>
+                <div class="flex justify-center gap-4">
+                    <button class="modal-cancel-btn font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-muted); color: var(--bg-primary);">Cancel</button>
+                    <button class="modal-confirm-btn font-bold py-2 px-6 rounded-lg" style="background-color: var(--button-delete); color: white;">Confirm</button>
+                </div></div>`;
+            showModal(confirmationModalContainer, content);
+            confirmationModalContainer.querySelector('.modal-cancel-btn').onclick = () => hideModal(confirmationModalContainer);
+            confirmationModalContainer.querySelector('.modal-confirm-btn').onclick = () => { onConfirm(); hideModal(confirmationModalContainer); };
+        };
+        const showMoveToGroupModal = (itemsToMove) => {
+            const allGroups = getAllItems(data).filter(i => i.type === 'group');
+            if (allGroups.length === 0) { showToast("No groups available to move to."); return; }
+            
+            let selectedGroupId = null;
+            const title = itemsToMove.length > 1 ? `Move ${itemsToMove.length} Items` : `Move '${itemsToMove[0].name}' to Group`;
+
+            const content = `<div class="glass-effect rounded-2xl p-8 shadow-lg max-w-md w-full mx-4" style="color: var(--text-primary);">
+                <h3 class="text-xl font-bold mb-4">${title}</h3>
+                <input type="text" id="group-search-input" placeholder="Search for a group..." class="w-full rounded-lg px-3 py-2 text-sm mb-2" style="background-color: var(--bg-primary); border: 1px solid var(--border-color);">
+                <div id="group-search-results" class="max-h-48 overflow-y-auto border rounded-lg p-2" style="border-color: var(--border-color);"></div>
+                <div class="flex justify-end gap-4 mt-4">
+                    <button class="modal-cancel-btn font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-muted); color: var(--bg-primary);">Cancel</button>
+                    <button id="move-confirm-btn" class="font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-accent); color: var(--bg-primary);" disabled>Move</button>
+                </div></div>`;
+            showModal(moveToGroupModalContainer, content);
+
+            const searchInput = moveToGroupModalContainer.querySelector('#group-search-input');
+            const resultsContainer = moveToGroupModalContainer.querySelector('#group-search-results');
+            const moveBtn = moveToGroupModalContainer.querySelector('#move-confirm-btn');
+
+            const renderResults = (groups) => {
+                resultsContainer.innerHTML = '';
+                if (groups.length === 0) {
+                    resultsContainer.innerHTML = `<p class="text-center p-4" style="color: var(--text-muted);">No groups found.</p>`;
+                    return;
+                }
+                groups.forEach(g => {
+                    const groupEl = document.createElement('div');
+                    groupEl.className = 'p-2 rounded cursor-pointer hover:bg-gray-700';
+                    groupEl.textContent = g.name;
+                    groupEl.dataset.groupId = g.id;
+                    groupEl.onclick = () => {
+                        selectedGroupId = g.id;
+                        searchInput.value = g.name;
+                        resultsContainer.querySelectorAll('div').forEach(d => d.style.backgroundColor = 'transparent');
+                        groupEl.style.backgroundColor = 'var(--text-accent)';
+                        moveBtn.disabled = false;
+                    };
+                    resultsContainer.appendChild(groupEl);
+                });
+            };
+
+            searchInput.oninput = () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredGroups = allGroups.filter(g => g.name.toLowerCase().includes(searchTerm));
+                renderResults(filteredGroups);
+                moveBtn.disabled = true;
+                selectedGroupId = null;
+            };
+            
+            renderResults(allGroups);
+
+            moveToGroupModalContainer.querySelector('.modal-cancel-btn').onclick = () => hideModal(moveToGroupModalContainer);
+            moveBtn.onclick = () => {
+                if (!selectedGroupId) return;
+
+                const targetLocation = findItem(selectedGroupId);
+                if (!targetLocation || targetLocation.item.type !== 'group') return;
+
+                itemsToMove.forEach(itemToMove => {
+                    const sourceLocation = findItem(itemToMove.id);
+                    if (sourceLocation) {
+                        const [movedItem] = sourceLocation.parent.splice(sourceLocation.index, 1);
+                         if (!Array.isArray(targetLocation.item.children)) {
+                            targetLocation.item.children = [];
+                        }
+                        targetLocation.item.children.push(movedItem);
+                    }
+                });
+                
+                selectedItems.clear();
+                saveState();
+                render();
+                hideModal(moveToGroupModalContainer);
+            };
+        };
+        const showReqModal = (itemToUpdate) => {
+            const allMods = getAllItems(data).filter(i => i.type === 'mod' && i.id !== itemToUpdate.id);
+            let selectedReqs = new Set(itemToUpdate.requirements || []);
+
+            const content = `<div class="glass-effect rounded-2xl p-8 shadow-lg max-w-md w-full mx-4" style="color: var(--text-primary);">
+                <h3 class="text-xl font-bold mb-4">Manage Requirements for '${itemToUpdate.name}'</h3>
+                <input type="text" id="req-search-input" placeholder="Search for mods to add..." class="w-full rounded-lg px-3 py-2 text-sm mb-2" style="background-color: var(--bg-primary); border: 1px solid var(--border-color);">
+                <div id="req-search-results" class="max-h-48 overflow-y-auto border rounded-lg p-2" style="border-color: var(--border-color);"></div>
+                <div class="flex justify-end gap-4 mt-4">
+                    <button class="modal-cancel-btn font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-muted); color: var(--bg-primary);">Cancel</button>
+                    <button id="req-confirm-btn" class="font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-accent); color: var(--bg-primary);">Save</button>
+                </div></div>`;
+            showModal(reqModalContainer, content);
+
+            const searchInput = reqModalContainer.querySelector('#req-search-input');
+            const resultsContainer = reqModalContainer.querySelector('#req-search-results');
+            
+            const renderResults = (mods) => {
+                resultsContainer.innerHTML = '';
+                mods.forEach(m => {
+                    const isSelected = selectedReqs.has(m.id);
+                    const modEl = document.createElement('label');
+                    modEl.className = `flex items-center gap-3 p-2 rounded cursor-pointer ${isSelected ? 'font-bold' : ''}`;
+                    modEl.innerHTML = `<input type="checkbox" ${isSelected ? 'checked' : ''} class="w-4 h-4"> ${m.name}`;
+                    modEl.querySelector('input').onchange = () => {
+                        if (modEl.querySelector('input').checked) {
+                            selectedReqs.add(m.id);
+                        } else {
+                            selectedReqs.delete(m.id);
+                        }
+                    };
+                    resultsContainer.appendChild(modEl);
+                });
+            };
+
+            searchInput.oninput = () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredMods = allMods.filter(m => m.name.toLowerCase().includes(searchTerm));
+                renderResults(filteredMods);
+            };
+            
+            renderResults(allMods);
+
+            reqModalContainer.querySelector('.modal-cancel-btn').onclick = () => hideModal(reqModalContainer);
+            reqModalContainer.querySelector('#req-confirm-btn').onclick = () => {
+                itemToUpdate.requirements = Array.from(selectedReqs);
+                saveState();
+                render();
+                hideModal(reqModalContainer);
+            };
+        };
+        const showSettingsModal = () => {
+            const themes = { 
+                'theme-default': 'Dark Cyan', 'theme-slate': 'Dark Slate', 'theme-light': 'Light', 'theme-light-slate': 'Light Slate',
+                'theme-royal': 'Royal Purple', 'theme-sakura': 'Sakura Pink', 'theme-bimbo': 'Bimbo Pink', 'theme-synthwave': 'Synthwave',
+                'theme-ocean': 'Ocean', 'theme-sunset': 'Sunset', 'theme-forest': 'Forest', 'theme-monochrome': 'Monochrome'
+            };
+            const currentTheme = document.body.className.split(' ').find(c => c.startsWith('theme-')) || 'theme-default';
+            const themeOptions = Object.entries(themes).map(([key, name]) => `
+                <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="theme" value="${key}" ${currentTheme === key ? 'checked' : ''} class="w-4 h-4"> ${name}</label>
+            `).join('');
+            const content = `<div class="glass-effect rounded-2xl p-8 shadow-lg max-w-sm w-full mx-4" style="color: var(--text-primary);">
+                <h3 class="text-xl font-bold mb-4">Settings</h3>
+                <div class="space-y-2">
+                    <p class="font-semibold" style="color: var(--text-secondary);">Theme</p>
+                    <div class="grid grid-cols-2 gap-2">${themeOptions}</div>
+                </div>
+                <div class="flex justify-end mt-6"><button class="modal-close-btn font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-accent); color: var(--bg-primary);">Close</button></div>
+            </div>`;
+            showModal(settingsModalContainer, content);
+            settingsModalContainer.querySelector('.modal-close-btn').onclick = () => hideModal(settingsModalContainer);
+            settingsModalContainer.querySelectorAll('input[name="theme"]').forEach(radio => {
+                radio.onchange = (e) => applyTheme(e.target.value);
+            });
+        };
+        const applyTheme = (themeClass) => {
+            document.body.className = themeClass; // Overwrite all classes
+            const settings = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY)) || {};
+            settings.theme = themeClass;
+            localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+        };
+        const loadSettings = () => {
+            const settings = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY));
+            applyTheme(settings?.theme || 'theme-default');
+            columnWidths = settings?.columnWidths || {
+                index: 48, options: 40, drag: 40, color: 32, enabled: 64, name: 256, size: 96, date: 128, url: 192, type: 96, note: 192, progress: 128, references: 192
+            };
+            columnOrder = settings?.columnOrder || ['index', 'options', 'drag', 'color', 'enabled', 'name', 'size', 'date', 'url', 'type', 'note', 'progress', 'references', 'requirements'];
+        };
+        const startNewList = () => {
+            showConfirmationModal('Start New List?', 'This will clear the current list. Are you sure?', () => {
+                data = [];
+                nextId = 1;
+                listName = 'New List';
+                selectedItems.clear();
+                saveState();
+                render();
+                showToast('New list started.');
+            });
+        };
+        const exportList = () => {
+            const listData = { listName, items: data, nextId };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(listData, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", `${listName}.json`);
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            showToast(`List "${listName}" exported.`);
+        };
+
+        const importList = (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (importedData.listName && Array.isArray(importedData.items)) {
+                        data = importedData.items;
+                        nextId = importedData.nextId || 1;
+                        listName = importedData.listName;
+                        selectedItems.clear();
+                        saveState();
+                        render();
+                        showToast(`List "${listName}" imported successfully.`);
+                    } else {
+                        showToast("Invalid list file format.");
+                    }
+                } catch (error) {
+                    showToast("Error reading or parsing the file.");
+                    console.error("Import error:", error);
+                }
+            };
+            reader.readAsText(file);
+            importFileInput.value = '';
+        };
+
+        const showColumnsModal = () => {
+            const columnDefinitions = {
+                'enabled': { name: 'Enabled', deletable: true },
+                'name': { name: 'Name', deletable: false },
+                'size': { name: 'Size', deletable: true },
+                'date': { name: 'Update Date', deletable: true },
+                'url': { name: 'URL', deletable: true },
+                'type': { name: 'Type', deletable: true },
+                'note': { name: 'Note', deletable: true },
+                'progress': { name: 'Progress', deletable: true },
+                'references': { name: 'References', deletable: true },
+                'requirements': { name: 'Requirements', deletable: false }
+            };
+
+            const allPossibleCols = Object.keys(columnDefinitions);
+            const customCols = columnOrder.filter(key => !allPossibleCols.includes(key) && !['index', 'options', 'drag', 'color'].includes(key));
+
+            const defaultColsHTML = allPossibleCols.map(key => {
+                const col = columnDefinitions[key];
+                return `<label class="flex items-center gap-3"><input type="checkbox" data-col-key="${key}" ${columnOrder.includes(key) ? 'checked' : ''}> ${col.name}</label>`;
+            }).join('');
+
+            const customColsHTML = customCols.map(key => {
+                return `<div class="flex items-center justify-between"><span>${key}</span><button data-col-key="${key}" class="delete-col-btn text-red-500 font-bold text-xl">&times;</button></div>`;
+            }).join('');
+
+            const content = `<div class="glass-effect rounded-2xl p-8 shadow-lg max-w-md w-full mx-4" style="color: var(--text-primary);">
+                <h3 class="text-xl font-bold mb-4">Manage Columns</h3>
+                <div class="space-y-2">
+                    <p class="font-semibold" style="color: var(--text-secondary);">Default Columns</p>
+                    <div class="grid grid-cols-2 gap-2">${defaultColsHTML}</div>
+                </div>
+                <div class="border-t my-4" style="border-color: var(--border-color);"></div>
+                <div class="space-y-2">
+                    <p class="font-semibold" style="color: var(--text-secondary);">Custom Columns</p>
+                    <div id="custom-columns-list">${customColsHTML}</div>
+                    <div class="flex gap-2 pt-2">
+                        <input type="text" id="new-col-input" placeholder="New column name..." class="w-full rounded-lg px-3 py-2 text-sm" style="background-color: var(--bg-primary); border: 1px solid var(--border-color);">
+                        <button id="add-col-btn" class="font-bold py-2 px-4 rounded-lg text-sm" style="background-color: var(--text-accent); color: var(--bg-primary);">Add</button>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-6"><button class="modal-close-btn font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-accent); color: var(--bg-primary);">Close</button></div>
+            </div>`;
+            showModal(settingsModalContainer, content);
+            
+            const updateColumnVisibility = () => {
+                const newOrder = ['index', 'options', 'drag', 'color'];
+                settingsModalContainer.querySelectorAll('input[type="checkbox"][data-col-key]').forEach(cb => {
+                    if (cb.checked) {
+                        newOrder.push(cb.dataset.colKey);
+                    }
+                });
+                newOrder.push(...customCols, 'requirements');
+                columnOrder = newOrder;
+                const settings = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY)) || {};
+                settings.columnOrder = columnOrder;
+                localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+                render();
+            };
+            
+            settingsModalContainer.querySelectorAll('input[type="checkbox"][data-col-key]').forEach(cb => {
+                cb.onchange = updateColumnVisibility;
+            });
+            
+            settingsModalContainer.querySelectorAll('.delete-col-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const key = btn.dataset.colKey;
+                    const index = columnOrder.indexOf(key);
+                    if (index > -1) {
+                        columnOrder.splice(index, 1);
+                        delete columnWidths[key];
+                        const settings = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY)) || {};
+                        settings.columnOrder = columnOrder;
+                        settings.columnWidths = columnWidths;
+                        localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+                        showColumnsModal(); // Re-render the modal
+                        render(); // Re-render the table
+                    }
+                };
+            });
+
+            settingsModalContainer.querySelector('#add-col-btn').onclick = () => {
+                const input = settingsModalContainer.querySelector('#new-col-input');
+                const newColName = input.value.trim();
+                if (newColName && !columnOrder.includes(newColName)) {
+                    const newKey = newColName.toLowerCase().replace(/\s+/g, '');
+                    columnOrder.splice(-1, 0, newKey); // Add before requirements
+                    columnWidths[newKey] = 150; // Default width
+                    getAllItems(data).forEach(item => {
+                        if (item.type === 'mod' || item.type === 'group') {
+                            if (!item.customData) {
+                                item.customData = {};
+                            }
+                            item.customData[newKey] = '...';
+                        }
+                    });
+                    const settings = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY)) || {};
+                    settings.columnOrder = columnOrder;
+                    settings.columnWidths = columnWidths;
+                    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+                    showColumnsModal(); // Re-render the modal
+                    render();
+                } else if (!newColName) {
+                    showToast("Column name cannot be empty.");
+                } else {
+                    showToast("Column already exists.");
+                }
+            };
+
+            settingsModalContainer.querySelector('.modal-close-btn').onclick = () => hideModal(settingsModalContainer);
+        };
+
+        const showColorPicker = (item) => {
+            const colors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#a1a1aa'];
+            const swatches = colors.map(color => 
+                `<div class="w-8 h-8 rounded-full cursor-pointer border-2 border-transparent hover:border-white" style="background-color: ${color};" data-color="${color}"></div>`
+            ).join('');
+
+            const content = `<div class="glass-effect rounded-2xl p-8 shadow-lg max-w-xs w-full mx-4" style="color: var(--text-primary);">
+                <h3 class="text-xl font-bold mb-4 text-center">Select a Color</h3>
+                <div class="grid grid-cols-4 gap-4">
+                    ${swatches}
+                </div>
+                 <div class="flex justify-end mt-6"><button class="modal-close-btn font-bold py-2 px-6 rounded-lg" style="background-color: var(--text-muted); color: var(--bg-primary);">Cancel</button></div>
+            </div>`;
+
+            showModal(colorPickerModalContainer, content);
+
+            colorPickerModalContainer.querySelectorAll('[data-color]').forEach(swatch => {
+                swatch.onclick = () => {
+                    item.color = swatch.dataset.color;
+                    saveState();
+                    render();
+                    hideModal(colorPickerModalContainer);
+                };
+            });
+            colorPickerModalContainer.querySelector('.modal-close-btn').onclick = () => hideModal(colorPickerModalContainer);
+        };
+
+        const autoLayoutGraph = (nodes) => {
+            const levels = new Map();
+            const nodeMap = new Map(nodes.map(n => [n.id, n]));
+            let maxLevel = 0;
+
+            function getNodeLevel(node) {
+                if (levels.has(node.id)) return levels.get(node.id);
+                const reqs = node.type === 'group' ? getGroupRequirements(node) : (node.requirements || []);
+                if (reqs.length === 0) {
+                    levels.set(node.id, 0);
+                    return 0;
+                }
+                const reqLevels = reqs.map(reqId => {
+                    const reqNode = nodeMap.get(reqId);
+                    return reqNode ? getNodeLevel(reqNode) : -1;
+                });
+                const level = Math.max(...reqLevels) + 1;
+                maxLevel = Math.max(maxLevel, level);
+                levels.set(node.id, level);
+                return level;
+            }
+
+            nodes.forEach(node => getNodeLevel(node));
+
+            const nodesByLevel = Array.from({ length: maxLevel + 1 }, () => []);
+            nodes.forEach(node => {
+                if(node.x === undefined || node.y === undefined) {
+                    const level = levels.get(node.id);
+                    nodesByLevel[level].push(node);
+                }
+            });
+
+            const xSpacing = 250;
+            const ySpacing = 150;
+            nodesByLevel.forEach((levelNodes, level) => {
+                levelNodes.forEach((node, i) => {
+                    node.x = 100 + level * xSpacing;
+                    node.y = 100 + i * ySpacing;
+                });
+            });
+        };
+
+        const drawGraph = () => {
+            if (!graphState.ctx) return;
+            const { ctx, nodes, nodeMapForLayout, childToParentMap, cameraOffset, cameraZoom } = graphState;
+            const style = getComputedStyle(document.body);
+            const accentColor = style.getPropertyValue('--text-accent').trim();
+            const deleteColor = style.getPropertyValue('--button-delete').trim();
+            const nodeTextColor = style.getPropertyValue('--graph-node-text').trim();
+
+            graphView.width = graphView.offsetWidth;
+            graphView.height = graphView.offsetHeight;
+            
+            ctx.save();
+            ctx.translate(cameraOffset.x, cameraOffset.y);
+            ctx.scale(cameraZoom, cameraZoom);
+
+            // Draw lines and arrows
+            nodes.forEach(node => {
+                const allReqs = node.type === 'group' ? getGroupRequirements(node) : (node.requirements || []);
+                allReqs.forEach(reqId => {
+                    const finalTargetId = childToParentMap.get(reqId) || reqId;
+                    const targetNode = nodeMapForLayout.get(finalTargetId);
+
+                    if (targetNode && targetNode.id !== node.id) {
+                        const requirementItem = itemMap.get(reqId);
+                        const isEnabled = node.enabled && requirementItem && requirementItem.enabled;
+                        const strokeStyle = isEnabled ? accentColor : deleteColor;
+                        
+                        ctx.strokeStyle = strokeStyle;
+                        ctx.fillStyle = strokeStyle;
+                        ctx.lineWidth = 2 / cameraZoom;
+
+                        // Draw line
+                        ctx.beginPath();
+                        ctx.moveTo(node.x, node.y);
+                        ctx.lineTo(targetNode.x, targetNode.y);
+                        ctx.stroke();
+
+                        // Draw arrow
+                        const angle = Math.atan2(targetNode.y - node.y, targetNode.x - node.x);
+                        const arrowHeadLength = 15;
+                        const arrowPointX = targetNode.x - 20 * Math.cos(angle); // Position arrow just before the circle
+                        const arrowPointY = targetNode.y - 20 * Math.sin(angle);
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(arrowPointX, arrowPointY);
+                        ctx.lineTo(arrowPointX - arrowHeadLength * Math.cos(angle - Math.PI / 6), arrowPointY - arrowHeadLength * Math.sin(angle - Math.PI / 6));
+                        ctx.lineTo(arrowPointX - arrowHeadLength * Math.cos(angle + Math.PI / 6), arrowPointY - arrowHeadLength * Math.sin(angle + Math.PI / 6));
+                        ctx.closePath();
+                        ctx.fill();
+                    }
+                });
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
+                ctx.fillStyle = node.color || (node.enabled ? 'var(--group-text)' : 'var(--text-muted)');
+                ctx.fill();
+                ctx.fillStyle = nodeTextColor;
+                ctx.textAlign = 'center';
+                ctx.font = `bold ${12 / cameraZoom}px Inter`;
+                ctx.fillText(node.name, node.x, node.y + 35);
+            });
+
+            ctx.restore();
+        };
+
+        const setupGraphView = () => {
+            graphState.ctx = graphView.getContext('2d');
+            
+            const getMousePos = (e) => {
+                const rect = graphView.getBoundingClientRect();
+                return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+            };
+            
+            const getWorldPos = (e) => {
+                const mousePos = getMousePos(e);
+                return {
+                    x: (mousePos.x - graphState.cameraOffset.x) / graphState.cameraZoom,
+                    y: (mousePos.y - graphState.cameraOffset.y) / graphState.cameraZoom
+                };
+            };
+
+            const getNodeAtPos = (pos) => {
+                return graphState.nodes.slice().reverse().find(node => {
+                    const distance = Math.sqrt(Math.pow(node.x - pos.x, 2) + Math.pow(node.y - pos.y, 2));
+                    return distance < 20;
+                });
+            };
+
+            graphView.onmousedown = (e) => {
+                const worldPos = getWorldPos(e);
+                graphState.draggedNode = getNodeAtPos(worldPos);
+
+                if (graphState.draggedNode) {
+                    graphState.isPanning = false;
+                } else {
+                    graphState.isPanning = true;
+                    graphState.panStart.x = e.clientX - graphState.cameraOffset.x;
+                    graphState.panStart.y = e.clientY - graphState.cameraOffset.y;
+                    graphView.style.cursor = 'grabbing';
+                }
+            };
+
+            graphView.onmousemove = (e) => {
+                if (graphState.isPanning) {
+                    graphState.cameraOffset.x = e.clientX - graphState.panStart.x;
+                    graphState.cameraOffset.y = e.clientY - graphState.panStart.y;
+                    drawGraph();
+                } else if (graphState.draggedNode) {
+                    const worldPos = getWorldPos(e);
+                    graphState.draggedNode.x = worldPos.x;
+                    graphState.draggedNode.y = worldPos.y;
+                    drawGraph();
+                } else {
+                    const worldPos = getWorldPos(e);
+                    graphState.hoveredNode = getNodeAtPos(worldPos);
+                    if (graphState.hoveredNode) {
+                        graphView.style.cursor = 'pointer';
+                        const mousePos = getMousePos(e);
+                        graphTooltip.style.display = 'block';
+                        graphTooltip.style.left = `${mousePos.x + 15}px`;
+                        graphTooltip.style.top = `${mousePos.y + 15}px`;
+                        
+                        let tooltipContent = `<div class="font-bold mb-1">${graphState.hoveredNode.name}</div>`;
+                        const reqs = graphState.hoveredNode.type === 'group' ? getGroupRequirements(graphState.hoveredNode) : graphState.hoveredNode.requirements;
+                        if (reqs && reqs.length > 0) {
+                            tooltipContent += `<div class="text-xs" style="color: var(--text-secondary)">Requires: ${reqs.map(id => itemMap.get(id)?.name || 'Missing').join(', ')}</div>`;
+                        }
+                        if (graphState.hoveredNode.type === 'group' && graphState.hoveredNode.children.length > 0) {
+                            tooltipContent += `<div class="text-xs mt-1" style="color: var(--text-secondary)">Contains: ${graphState.hoveredNode.children.map(c => c.name).join(', ')}</div>`;
+                        }
+                        graphTooltip.innerHTML = tooltipContent;
+
+                    } else {
+                        graphView.style.cursor = 'grab';
+                        graphTooltip.style.display = 'none';
+                    }
+                }
+            };
+
+            graphView.onmouseup = () => {
+                if (graphState.draggedNode) {
+                    saveState();
+                }
+                graphState.isPanning = false;
+                graphState.draggedNode = null;
+                graphView.style.cursor = 'grab';
+            };
+            
+            graphView.onmouseout = () => {
+                 graphTooltip.style.display = 'none';
+            };
+
+            graphView.onwheel = (e) => {
+                e.preventDefault();
+                const zoomIntensity = 0.1;
+                const scroll = e.deltaY < 0 ? 1 + zoomIntensity : 1 - zoomIntensity;
+                const mousePos = getMousePos(e);
+                
+                const worldPosBeforeZoom = getWorldPos(e);
+                graphState.cameraZoom *= scroll;
+                const worldPosAfterZoom = getWorldPos(e);
+
+                graphState.cameraOffset.x += (worldPosAfterZoom.x - worldPosBeforeZoom.x) * graphState.cameraZoom;
+                graphState.cameraOffset.y += (worldPosAfterZoom.y - worldPosBeforeZoom.y) * graphState.cameraZoom;
+
+                drawGraph();
+            };
+        };
+
+        const renderGraph = () => {
+            graphState.nodes = data.filter(item => item.type === 'mod' || item.type === 'group');
+            graphState.nodeMapForLayout = new Map(graphState.nodes.map(n => [n.id, n]));
+            
+            graphState.childToParentMap.clear();
+             data.forEach(parent => {
+                if (parent.type === 'group' && parent.children) {
+                    getAllItems(parent.children).forEach(child => {
+                        graphState.childToParentMap.set(child.id, parent.id);
+                    });
+                }
+            });
+
+            autoLayoutGraph(graphState.nodes);
+            drawGraph();
+        };
+
+
+        // --- Event Listeners ---
+        addModBtn.addEventListener('click', () => addItem('mod'));
+        addGroupBtn.addEventListener('click', () => addItem('group'));
+        addSeparatorBtn.addEventListener('click', () => addItem('separator'));
+        newListBtn.addEventListener('click', startNewList);
+        importBtn.addEventListener('click', () => importFileInput.click());
+        importFileInput.addEventListener('change', importList);
+        exportBtn.addEventListener('click', exportList);
+        settingsBtn.addEventListener('click', showSettingsModal);
+        columnsBtn.addEventListener('click', showColumnsModal);
+        viewToggleBtn.addEventListener('click', () => {
+            currentView = currentView === 'list' ? 'graph' : 'list';
+            listView.classList.toggle('hidden');
+            graphView.classList.toggle('hidden');
+            render();
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.row-item') && !e.target.closest('.item-options-menu') && !e.target.closest('.options-btn')) {
+                selectedItems.clear();
+                render();
+            }
+        });
+        currentListNameEl.addEventListener('blur', (e) => {
+            const newName = e.target.textContent.trim();
+            if (newName && newName !== listName) {
+                listName = newName;
+                saveState();
+                showToast("List name updated.");
+            } else {
+                e.target.textContent = listName;
+            }
+        });
+        currentListNameEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                e.target.blur();
+            }
+        });
+
+        // --- Initial Load ---
+        setupGraphView();
+        loadSettings();
+        loadState();
+        render();
+    });
+    </script>
+</body>
+</html>
