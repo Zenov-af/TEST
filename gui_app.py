@@ -177,18 +177,29 @@ class AssistantApp:
         self.chat_area.configure(state='disabled')
         self.chat_area.yview(tk.END)
 
-    def initialize_ai_models(self):
+    def _initialize_tts(self):
         try:
-            self.set_state(AppState.PROCESSING, status_message="Loading STT model...")
-            self.whisper_model = Model(WHISPER_MODEL_NAME, n_threads=4, language='de')
-
-            self.set_state(AppState.PROCESSING, status_message="Loading TTS engine...")
             self.tts_engine = pyttsx3.init()
             voices = self.tts_engine.getProperty('voices')
             for voice in voices:
                 if 'german' in voice.name.lower() or 'de-de' in voice.id.lower():
                     self.tts_engine.setProperty('voice', voice.id)
                     break
+        except Exception as e:
+            # If initialization fails, ensure engine is None so we can retry
+            self.tts_engine = None
+            # We are in a thread, so we can't directly update UI easily without risking race conditions.
+            # The error will be caught and handled in the speak() method.
+            raise e
+
+
+    def initialize_ai_models(self):
+        try:
+            self.set_state(AppState.PROCESSING, status_message="Loading STT model...")
+            self.whisper_model = Model(WHISPER_MODEL_NAME, n_threads=4, language='de')
+
+            self.set_state(AppState.PROCESSING, status_message="Loading TTS engine...")
+            self._initialize_tts()
 
             self.set_state(AppState.IDLE)
         except Exception as e:
@@ -223,20 +234,27 @@ class AssistantApp:
 
     def on_skip_press(self):
         if self.current_state == AppState.SPEAKING:
-            self.tts_engine.stop()
-            # Immediately reset the UI to idle, don't wait for the speak thread to finish
+            if self.tts_engine and getattr(self.tts_engine, '_inLoop', False):
+                self.tts_engine.stop()
+            self.tts_engine = None  # Discard the faulty engine instance
             self.set_state(AppState.IDLE, status_message="Skipped")
 
     def speak(self, text):
         if self.current_state not in [AppState.IDLE, AppState.PROCESSING]: return
 
         def run_tts():
-            self.set_state(AppState.SPEAKING)
             self.is_speaking.set()
             try:
+                # Re-initialize engine if it was discarded
+                if self.tts_engine is None:
+                    self._initialize_tts()
+
+                self.set_state(AppState.SPEAKING)
                 clean_text = re.sub(r'[\*_`]', '', text)
                 self.tts_engine.say(clean_text)
                 self.tts_engine.runAndWait()
+            except Exception as e:
+                self.set_state(AppState.ERROR, status_message=f"TTS Error: {e}")
             finally:
                 self.is_speaking.clear()
                 if self.current_state == AppState.SPEAKING:

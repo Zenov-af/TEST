@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physique Transformation Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Poppins:wght@700&family=Share+Tech+Mono&family=Merriweather&family=Press+Start+2P&family=Nunito:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Dancing+Script:wght@700&family=Raleway:wght@300;500&family=Pacifico&family=Roboto:wght@400;700&family=Oswald:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Quicksand:wght@400;700&family=Roboto+Slab:wght@400;700&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #111827; --bg-secondary: #1f2937; --bg-tertiary: #374151;
+            --text-primary: #f9fafb; --text-secondary: #d1d5db; --text-tertiary: #9ca3af;
+            --accent-primary: #6366f1; --accent-secondary: #818cf8; --font-main: 'Inter', sans-serif;
+        }
+        .theme-light {
+            --bg-primary: #f3f4f6; --bg-secondary: #ffffff; --bg-tertiary: #e5e7eb;
+            --text-primary: #111827; --text-secondary: #374151; --text-tertiary: #6b7280;
+            --accent-primary: #4f46e5; --accent-secondary: #7c3aed;
+            --font-main: 'Roboto', sans-serif;
+        }
+        .theme-bimbo {
+            --bg-primary: #fdf2f8; --bg-secondary: #ffffff; --bg-tertiary: #fce7f3;
+            --text-primary: #831843; --text-secondary: #be185d; --text-tertiary: #db2777;
+            --accent-primary: #f472b6; --accent-secondary: #ec4899; --font-main: 'Poppins', sans-serif;
+        }
+        .theme-regal {
+            --bg-primary: #2e1065; --bg-secondary: #3b0764; --bg-tertiary: #4c1d95;
+            --text-primary: #fcd34d; --text-secondary: #e9d5ff; --text-tertiary: #d8b4fe;
+            --accent-primary: #f59e0b; --accent-secondary: #fcd34d; --font-main: 'Playfair Display', serif;
+        }
+        .theme-energetic {
+            --bg-primary: #0c0a09; --bg-secondary: #1c1917; --bg-tertiary: #292524;
+            --text-primary: #fafaf9; --text-secondary: #e7e5e4; --text-tertiary: #a8a29e;
+            --accent-primary: #f97316; --accent-secondary: #fb923c; --font-main: 'Oswald', sans-serif;
+        }
+        .theme-cyberpunk {
+            --bg-primary: #0d0221; --bg-secondary: #2d2d44; --bg-tertiary: #242038;
+            --text-primary: #f0f0f0; --text-secondary: #9d8df1; --text-tertiary: #8b92e8;
+            --accent-primary: #f72585; --accent-secondary: #7209b7; --font-main: 'Share Tech Mono', monospace;
+        }
+        .theme-ocean {
+            --bg-primary: #03045e; --bg-secondary: #023e8a; --bg-tertiary: #0077b6;
+            --text-primary: #ffffff; --text-secondary: #caf0f8; --text-tertiary: #90e0ef;
+            --accent-primary: #00b4d8; --accent-secondary: #48cae4; --font-main: 'Lato', sans-serif;
+        }
+        .theme-sunset {
+            --bg-primary: #4c1a57; --bg-secondary: #832161; --bg-tertiary: #ad205e;
+            --text-primary: #fcfcfc; --text-secondary: #f9c80e; --text-tertiary: #f48c06;
+            --accent-primary: #da2c38; --accent-secondary: #ea4335; --font-main: 'Montserrat', sans-serif;
+        }
+        .theme-graphite {
+            --bg-primary: #1c1c1c; --bg-secondary: #2d2d2d; --bg-tertiary: #454545;
+            --text-primary: #e0e0e0; --text-secondary: #b0b0b0; --text-tertiary: #8c8c8c;
+            --accent-primary: #6c6c6c; --accent-secondary: #999999; --font-main: 'Source Sans Pro', sans-serif;
+        }
+        .theme-paper {
+            --bg-primary: #f4f1ea; --bg-secondary: #ffffff; --bg-tertiary: #e9e6e1;
+            --text-primary: #3a3a3a; --text-secondary: #585858; --text-tertiary: #8a8a8a;
+            --accent-primary: #005f73; --accent-secondary: #0a9396; --font-main: 'Merriweather', serif;
+        }
+        .theme-mint {
+            --bg-primary: #f0fdf4; --bg-secondary: #ffffff; --bg-tertiary: #dcfce7;
+            --text-primary: #14532d; --text-secondary: #166534; --text-tertiary: #15803d;
+            --accent-primary: #22c55e; --accent-secondary: #4ade80; --font-main: 'Quicksand', sans-serif;
+        }
+        .theme-crimson {
+            --bg-primary: #120101; --bg-secondary: #240000; --bg-tertiary: #490000;
+            --text-primary: #fff1f1; --text-secondary: #ffc2c2; --text-tertiary: #ff8a8a;
+            --accent-primary: #dc2626; --accent-secondary: #ef4444; --font-main: 'Roboto Slab', serif;
+        }
+        .theme-nord {
+            --bg-primary: #2e3440; --bg-secondary: #3b4252; --bg-tertiary: #434c5e;
+            --text-primary: #d8dee9; --text-secondary: #e5e9f0; --text-tertiary: #eceff4;
+            --accent-primary: #88c0d0; --accent-secondary: #81a1c1; --font-main: 'Ubuntu', sans-serif;
+        }
+        .theme-8bit {
+            --bg-primary: #000000; --bg-secondary: #222222; --bg-tertiary: #444444;
+            --text-primary: #ffffff; --text-secondary: #00ffff; --text-tertiary: #ff00ff;
+            --accent-primary: #ffff00; --accent-secondary: #00ff00; --font-main: 'Press Start 2P', cursive;
+        }
+        .theme-golden {
+            --bg-primary: #1a1a1a; --bg-secondary: #2c2c2c; --bg-tertiary: #383838;
+            --text-primary: #e6d5b8; --text-secondary: #d4b28c; --text-tertiary: #aa8a6f;
+            --accent-primary: #c89666; --accent-secondary: #d4b28c; --font-main: 'Playfair Display', serif;
+        }
+        .theme-pastel-dream {
+            --bg-primary: #fdf4f5; --bg-secondary: #ffffff; --bg-tertiary: #e8e0f1;
+            --text-primary: #5e548e; --text-secondary: #9f86c0; --text-tertiary: #be95c4;
+            --accent-primary: #e0b1cb; --accent-secondary: #f2c3d4; --font-main: 'Nunito', sans-serif;
+        }
+        .theme-sakura {
+            --bg-primary: #fff0f3; --bg-secondary: #ffffff; --bg-tertiary: #ffe0e5;
+            --text-primary: #5c374c; --text-secondary: #8d5b7a; --text-tertiary: #b17aa1;
+            --accent-primary: #ff8fab; --accent-secondary: #ffb3c1; --font-main: 'Noto Sans JP', sans-serif;
+        }
+        .theme-lavender-bliss {
+            --bg-primary: #f3f0ff; --bg-secondary: #ffffff; --bg-tertiary: #e5d9f2;
+            --text-primary: #4a4259; --text-secondary: #6d6380; --text-tertiary: #9b90af;
+            --accent-primary: #a388ee; --accent-secondary: #b9a2f2; --font-main: 'Dancing Script', cursive;
+        }
+        .theme-rose-gold {
+            --bg-primary: #f9f5f2; --bg-secondary: #ffffff; --bg-tertiary: #f2e9e4;
+            --text-primary: #5c4742; --text-secondary: #9a8c98; --text-tertiary: #c9ada7;
+            --accent-primary: #e8a598; --accent-secondary: #f2c6de; --font-main: 'Raleway', sans-serif;
+        }
+        .theme-kawaii {
+            --bg-primary: #fff1f7; --bg-secondary: #ffffff; --bg-tertiary: #ffdae9;
+            --text-primary: #9d3c6c; --text-secondary: #de6fa1; --text-tertiary: #f7a8d0;
+            --accent-primary: #ff80c0; --accent-secondary: #ff99d6; --font-main: 'Pacifico', cursive;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            transition: background-color 0.3s, color 0.3s;
+            background: linear-gradient(-45deg, var(--bg-primary), var(--bg-secondary), var(--bg-primary), var(--bg-tertiary));
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        .glassmorphic {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link.active { background-color: var(--accent-primary); color: white; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .workout-tab.active { background-color: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        .workout-day { display: none; }
+        .workout-day.active { display: block; }
+        .task-checkbox { display: none; }
+        .task-checkbox + label .checkbox-visual { width: 20px; height: 20px; border: 2px solid var(--text-tertiary); border-radius: 4px; margin-right: 12px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .task-checkbox + label .checkbox-visual .fa-check { display: none; color: var(--bg-secondary); }
+        .task-checkbox:checked + label .checkbox-visual { background-color: var(--accent-primary); border-color: var(--accent-primary); }
+        .task-checkbox:checked + label .checkbox-visual .fa-check { display: block; }
+        .task-checkbox:checked + label .exercise-name { text-decoration: line-through; color: var(--text-tertiary); }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center;}
+        .modal-content { background-color: var(--bg-secondary); margin: auto; border: 1px solid var(--bg-tertiary); width: 90%; max-width: 900px; border-radius: 10px; color: var(--text-secondary); display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .modal-nav { flex-shrink: 0; display:flex; flex-wrap:wrap; padding: 1rem; border-bottom: 1px solid var(--bg-tertiary); }
+        .modal-nav a { display: block; padding: 0.5rem 1rem; margin-bottom: 0.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem; }
+        .modal-nav a:hover, .modal-nav a.active { background-color: var(--bg-tertiary); color: var(--text-primary); }
+        .modal-body { flex-grow: 1; max-height: 70vh; overflow-y: auto; padding: 1rem; md:padding: 2rem; }
+        .modal-chapter { display: none; }
+        .modal-chapter.active { display: block; }
+        .close-button { color: #aaa; position: absolute; top: 1rem; right: 1.5rem; font-size: 28px; font-weight: bold; }
+        .close-button:hover, .close-button:focus { color: var(--text-primary); text-decoration: none; cursor: pointer; }
+        .completion-dot { height: 2rem; width: 2rem; border-radius: 50%; background-color: var(--bg-tertiary); transition: background-color 0.3s; }
+        .completion-dot.completed { background-color: #22c55e; } /* green-500 */
+        .editable-title { cursor: pointer; }
+        .editable-title:hover { background-color: rgba(255,255,255,0.1); }
+        .fav-meal-btn.favorited { color: #facc15; } /* yellow-400 */
+
+        .toggle-switch { position: relative; display: inline-block; width: 40px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--bg-tertiary); transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--accent-primary); }
+        input:checked + .slider:before { transform: translateX(16px); }
+
+        /* NEW Styles for Measurement Table & Tooltip */
+        .measurement-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .measurement-table th, .measurement-table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .measurement-table tbody tr {
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+        .measurement-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        .measurement-table input, .measurement-table select {
+            background-color: transparent;
+            border: 1px solid var(--bg-tertiary);
+            padding: 8px;
+            border-radius: 6px;
+            width: 100%;
+            max-width: 120px;
+            text-align: center;
+        }
+        .info-icon {
+            cursor: pointer;
+            color: var(--accent-secondary);
+            font-size: 1.1rem;
+        }
+        #measurement-tooltip {
+            position: fixed;
+            display: none;
+            padding: 10px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            z-index: 101;
+            max-width: 250px;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            pointer-events: none; /* So it doesn't interfere with mouse events */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl p-2 sm:p-4">
+        <header class="text-center mb-4 relative">
+            <h1 class="text-3xl sm:text-4xl font-bold" style="color: var(--text-primary);">Physique Transformation Protocol</h1>
+            <p style="color: var(--accent-secondary);">Your Personal Fitness Guide</p>
+            <div class="absolute top-0 right-0">
+                <select id="theme-selector" class="rounded-md p-2 text-xs sm:text-base" style="background-color: var(--bg-tertiary); color: var(--text-primary);">
+                    <option value="theme-default">Default Dark</option>
+                    <option value="theme-light">Light</option>
+                    <option value="theme-bimbo">Bimbo</option>
+                    <option value="theme-regal">Regal</option>
+                    <option value="theme-energetic">Energetic</option>
+                    <option value="theme-cyberpunk">Cyberpunk</option>
+                    <option value="theme-ocean">Ocean</option>
+                    <option value="theme-sunset">Sunset</option>
+                    <option value="theme-graphite">Graphite</option>
+                    <option value="theme-paper">Paper</option>
+                    <option value="theme-mint">Mint</option>
+                    <option value="theme-crimson">Crimson</option>
+                    <option value="theme-nord">Nord</option>
+                    <option value="theme-8bit">8-Bit</option>
+                    <option value="theme-golden">Golden Age</option>
+                    <option value="theme-pastel-dream">Pastel Dream</option>
+                    <option value="theme-sakura">Sakura</option>
+                    <option value="theme-lavender-bliss">Lavender Bliss</option>
+                    <option value="theme-rose-gold">Rose Gold</option>
+                    <option value="theme-kawaii">Kawaii</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="flex flex-col sm:flex-row justify-center items-center mb-8 gap-2 sm:gap-4">
+            <label for="master-date-picker" class="font-semibold">Selected Date:</label>
+            <input type="date" id="master-date-picker" class="p-2 rounded" style="background-color: var(--bg-tertiary); color: var(--text-primary);">
+        </div>
+
+        <nav class="rounded-lg p-1 sm:p-2 mb-8 flex flex-wrap justify-around glassmorphic" style="--bg-secondary: transparent;">
+            <button id="nav-data" class="nav-link flex-1 text-center py-3 px-2 sm:px-4 rounded-md font-semibold active text-sm sm:text-base"><i class="fas fa-chart-line mr-2"></i>Data</button>
+            <button id="nav-diet" class="nav-link flex-1 text-center py-3 px-2 sm:px-4 rounded-md font-semibold text-sm sm:text-base"><i class="fas fa-utensils mr-2"></i>Diet</button>
+            <button id="nav-workout" class="nav-link flex-1 text-center py-3 px-2 sm:px-4 rounded-md font-semibold text-sm sm:text-base"><i class="fas fa-dumbbell mr-2"></i>Workout</button>
+            <button id="nav-measurements" class="nav-link flex-1 text-center py-3 px-2 sm:px-4 rounded-md font-semibold text-sm sm:text-base"><i class="fas fa-ruler-combined mr-2"></i>Measurements</button>
+        </nav>
+
+        <main>
+            <!-- Data Section -->
+            <section id="section-data" class="section active">
+                <div class="p-4 md:p-6 rounded-lg shadow-lg glassmorphic" style="--bg-secondary: transparent;">
+                    <h2 class="text-2xl font-bold mb-6 border-b-2 pb-2" style="color: var(--text-primary); border-color: var(--accent-primary);">Dashboard & Data</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="p-4 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                            <h3 class="font-semibold text-lg mb-3" style="color: var(--accent-secondary);">Log Weight</h3>
+                            <form id="weight-form" class="flex items-center gap-2">
+                                <input type="number" step="0.1" id="weight-input" placeholder="Weight in kg" class="w-full p-2 rounded glassmorphic" style="--bg-primary: transparent; color: var(--text-primary);" required>
+                                <button type="submit" class="p-2 rounded-md text-white" style="background-color: var(--accent-primary);"><i class="fas fa-plus"></i></button>
+                            </form>
+                        </div>
+                        <div class="p-4 rounded-lg flex items-center justify-center glassmorphic" style="--bg-tertiary: transparent;">
+                             <button id="open-protocol-modal" class="w-full h-full py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-primary);"><i class="fas fa-book-open mr-2"></i>Protocol & Calculator</button>
+                        </div>
+                        <div class="p-4 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                            <h3 class="font-semibold text-lg mb-3 text-center" style="color: var(--accent-secondary);">Export Data</h3>
+                            <button id="export-data-btn" class="w-full py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-primary);"><i class="fas fa-file-export mr-2"></i>Save to File</button>
+                        </div>
+                        <div class="p-4 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                            <h3 class="font-semibold text-lg mb-3 text-center" style="color: var(--accent-secondary);">Import Data</h3>
+                            <input type="file" id="import-data-input" class="hidden">
+                            <button id="import-data-btn" class="w-full py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-primary);"><i class="fas fa-file-import mr-2"></i>Load from File</button>
+                        </div>
+                    </div>
+                     <div class="p-4 rounded-lg mb-8 glassmorphic" style="--bg-tertiary: transparent;">
+                        <h3 class="font-semibold text-lg mb-3 text-center" style="color: var(--accent-secondary);">Weekly Completion</h3>
+                        <div id="completion-grid" class="flex justify-around items-center"></div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-8">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-4" style="color: var(--accent-secondary);">Nutrition Progress</h3>
+                            <div class="p-4 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                                <canvas id="nutritionChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-4" style="color: var(--accent-secondary);">Weight Progress</h3>
+                            <div class="p-4 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                                <canvas id="weightChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Diet Section -->
+            <section id="section-diet" class="section">
+                <div class="p-4 md:p-6 rounded-lg shadow-lg glassmorphic" style="--bg-secondary: transparent;">
+                    <div class="flex flex-col sm:flex-row justify-between items-center border-b-2 pb-2 mb-6" style="border-color: var(--accent-primary);">
+                        <h2 class="text-2xl font-bold mb-2 sm:mb-0" style="color: var(--text-primary);">Diet Tracker</h2>
+                        <div id="diet-view-toggle" class="flex rounded-lg p-1 glassmorphic" style="--bg-tertiary: transparent;">
+                            <button class="diet-view-btn active px-3 py-1 rounded-md text-sm font-semibold">Log</button>
+                            <button class="diet-view-btn px-3 py-1 rounded-md text-sm font-semibold">History</button>
+                        </div>
+                    </div>
+
+                    <div id="diet-today-view">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            <div class="p-3 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                                <label for="calorie-goal-input" class="text-sm" style="color: var(--text-tertiary);">Calories</label>
+                                <div id="calories-total" class="text-xl sm:text-2xl font-bold">0 / 0</div>
+                                <input type="number" id="calorie-goal-input" class="w-full bg-transparent text-center text-xs" style="color: var(--text-primary);"/>
+                                <div class="w-full rounded-full h-2.5 mt-2" style="background-color: var(--bg-primary);"><div id="calories-progress" class="h-2.5 rounded-full" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="p-3 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                                <label for="protein-goal-input" class="text-sm" style="color: var(--text-tertiary);">Protein</label>
+                                <div id="protein-total" class="text-xl sm:text-2xl font-bold">0 / 0 g</div>
+                                <input type="number" id="protein-goal-input" class="w-full bg-transparent text-center text-xs" style="color: var(--text-primary);"/>
+                                <div class="w-full rounded-full h-2.5 mt-2" style="background-color: var(--bg-primary);"><div id="protein-progress" class="h-2.5 rounded-full" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="p-3 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                                <label for="fat-goal-input" class="text-sm" style="color: var(--text-tertiary);">Fat</label>
+                                <div id="fat-total" class="text-xl sm:text-2xl font-bold">0 / 0 g</div>
+                                <input type="number" id="fat-goal-input" class="w-full bg-transparent text-center text-xs" style="color: var(--text-primary);"/>
+                                <div class="w-full rounded-full h-2.5 mt-2" style="background-color: var(--bg-primary);"><div id="fat-progress" class="h-2.5 rounded-full" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="p-3 rounded-lg glassmorphic" style="--bg-tertiary: transparent;">
+                                <label for="carb-goal-input" class="text-sm" style="color: var(--text-tertiary);">Carbs</label>
+                                <div id="carb-total" class="text-xl sm:text-2xl font-bold">0 / 0 g</div>
+                                <input type="number" id="carb-goal-input" class="w-full bg-transparent text-center text-xs" style="color: var(--text-primary);"/>
+                                <div class="w-full rounded-full h-2.5 mt-2" style="background-color: var(--bg-primary);"><div id="carb-progress" class="h-2.5 rounded-full" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+
+                        <form id="log-meal-form" class="mb-6">
+                            <h3 class="font-semibold text-lg mb-3" style="color: var(--accent-secondary);">Log Meal for <span id="log-date-display"></span></h3>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                <input type="text" id="meal-name" placeholder="Food item" class="col-span-2 sm:col-span-4 p-2 rounded glassmorphic" style="--bg-tertiary: transparent; color: var(--text-primary);" required>
+                                <input type="number" id="meal-calories" placeholder="Calories" class="p-2 rounded glassmorphic" style="--bg-tertiary: transparent; color: var(--text-primary);" required>
+                                <input type="number" id="meal-protein" placeholder="Protein (g)" class="p-2 rounded glassmorphic" style="--bg-tertiary: transparent; color: var(--text-primary);" required>
+                                <input type="number" id="meal-fat" placeholder="Fat (g)" class="p-2 rounded glassmorphic" style="--bg-tertiary: transparent; color: var(--text-primary);" required>
+                                <input type="number" id="meal-carbs" placeholder="Carbs (g)" class="p-2 rounded glassmorphic" style="--bg-tertiary: transparent; color: var(--text-primary);" required>
+                            </div>
+                            <div class="mt-4 flex gap-4">
+                                <button type="submit" class="flex-1 py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-primary);">Add Meal</button>
+                                <button type="button" id="open-favorites-btn" class="flex-1 py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-secondary);"><i class="fas fa-star mr-2"></i>Favorites</button>
+                            </div>
+                        </form>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3" style="color: var(--accent-secondary);">Log for <span id="log-list-date-display"></span></h3>
+                            <ul id="meal-list" class="space-y-2"></ul>
+                        </div>
+                    </div>
+
+                    <div id="diet-history-view" class="hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <button id="prev-week" class="p-2 rounded glassmorphic" style="--bg-tertiary: transparent;"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="week-display" class="text-lg font-semibold text-center"></h3>
+                            <button id="next-week" class="p-2 rounded glassmorphic" style="--bg-tertiary: transparent;"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div id="history-log-display" class="space-y-4"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workout Section -->
+            <section id="section-workout" class="section">
+                 <div class="p-4 md:p-6 rounded-lg shadow-lg glassmorphic" style="--bg-secondary: transparent;">
+                    <div id="workout-tabs" class="flex flex-wrap -mb-px border-b" style="border-color: var(--bg-tertiary);"></div>
+                    <div id="workout-plan" class="mt-6"></div>
+                </div>
+            </section>
+
+            <!-- Measurements Section -->
+            <section id="section-measurements" class="section">
+                <div class="p-4 md:p-6 rounded-lg shadow-lg glassmorphic" style="--bg-secondary: transparent;">
+                    <div class="flex flex-col sm:flex-row justify-between items-center border-b-2 pb-2 mb-6" style="border-color: var(--accent-primary);">
+                        <h2 class="text-2xl font-bold mb-2 sm:mb-0" style="color: var(--text-primary);">Body Measurements</h2>
+                        <div class="flex items-center gap-4">
+                            <button id="manage-fields-btn" class="text-sm p-2 rounded-md glassmorphic" style="--bg-tertiary: transparent;"><i class="fas fa-cog mr-2"></i>Manage Fields</button>
+                        </div>
+                    </div>
+
+                    <div id="measurement-input-view" class="overflow-x-auto">
+                        <!-- Table will be dynamically generated here -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Protocol Modal -->
+    <div id="protocol-modal" class="modal">
+        <div class="modal-content relative">
+            <span class="close-button">&times;</span>
+            <nav class="modal-nav">
+                <a data-chapter="calculator" class="active">Calculator</a>
+                <a data-chapter="nutrition">Nutrition Guide</a>
+                <a data-chapter="training">Training Guide</a>
+                <a data-chapter="abs">Abs Guide</a>
+                <a data-chapter="conclusion">Conclusion</a>
+            </nav>
+            <div class="modal-body">
+                <div id="chapter-calculator" class="modal-chapter active">
+                    <h2 class="text-2xl font-bold">Personalized Macro Calculator</h2>
+                    <p class="mb-4">Enter your details to calculate your estimated daily needs.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="calc-age" class="block text-sm font-medium">Age</label>
+                            <input type="number" id="calc-age" value="24" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label for="calc-gender" class="block text-sm font-medium">Gender</label>
+                            <select id="calc-gender" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="calc-weight" class="block text-sm font-medium">Weight (kg)</label>
+                            <input type="number" id="calc-weight" value="100" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label for="calc-height" class="block text-sm font-medium">Height (cm)</label>
+                            <input type="number" id="calc-height" value="185" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="calc-activity" class="block text-sm font-medium">Activity Level</label>
+                            <select id="calc-activity" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);">
+                                <option value="1.2">Sedentary (little or no exercise)</option>
+                                <option value="1.375">Lightly active (light exercise/sports 1-3 days/week)</option>
+                                <option value="1.55">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                                <option value="1.725" selected>Very active (hard exercise/sports 6-7 days a week)</option>
+                                <option value="1.9">Extra active (very hard exercise/sports & physical job)</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="calc-goal" class="block text-sm font-medium">Goal</label>
+                            <select id="calc-goal" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);">
+                                <option value="-500">Fat Loss (-500 kcal)</option>
+                                <option value="0" selected>Maintenance</option>
+                                <option value="300">Lean Bulk (+300 kcal)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="calculate-macros-btn" class="mt-6 w-full py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-primary);">Calculate</button>
+                    <div id="calc-results" class="mt-6 p-4 rounded-lg hidden" style="background-color: var(--bg-primary);">
+                        <h3 class="font-semibold text-lg mb-3" style="color: var(--accent-secondary);">Your Estimated Daily Targets:</h3>
+                        <p id="result-calories"></p>
+                        <p id="result-protein"></p>
+                        <p id="result-fats"></p>
+                        <p id="result-carbs"></p>
+                        <button id="apply-macros-btn" class="mt-4 w-full py-2 px-4 rounded-md text-white font-semibold" style="background-color: #22c55e;">Apply to My Diet Tracker</button>
+                    </div>
+                </div>
+                <div id="chapter-nutrition" class="modal-chapter" contenteditable="true">
+                    <h2 class="text-2xl font-bold">Nutritional Architecture</h2>
+                    <p>Your foundation is a strategic caloric intake. We calculate your maintenance calories (TDEE) and then adjust based on your goal (e.g., a 20% deficit for fat loss) to promote body composition changes while preserving muscle. Your daily targets are:</p>
+                    <ul class="list-disc list-inside my-4 space-y-2">
+                        <li><strong>Protein:</strong> Essential for muscle repair and satiety. Aim for 1.6-2.2g per kg of bodyweight.</li>
+                        <li><strong>Fats:</strong> Crucial for hormones and health. Aim for 20-30% of total calories.</li>
+                        <li><strong>Carbs:</strong> Fuel for your workouts. Fills the rest of your calorie needs.</li>
+                    </ul>
+                </div>
+                <div id="chapter-training" class="modal-chapter" contenteditable="true">
+                    <h2 class="text-2xl font-bold">High-Frequency Training</h2>
+                    <p>The plan uses a Push/Pull/Legs (PPL) split with daily High-Intensity Interval Training (HIIT) to maximize calorie burn and muscle stimulation. An equipment upgrade (adjustable dumbbells up to 25kg) is mandatory for the core principle of <strong>progressive overload</strong>.</p>
+                </div>
+                <div id="chapter-abs" class="modal-chapter" contenteditable="true">
+                    <h2 class="text-2xl font-bold">The Abdominal Blueprint</h2>
+                    <p>Visible abs are a product of two things: <strong>low body fat</strong> (from your diet) and <strong>developed abdominal muscles</strong> (from training). You cannot "spot-reduce" belly fat. This plan builds the "bricks" of your abs through weighted, progressive core exercises, which will be revealed as your body fat percentage drops.</p>
+                </div>
+                <div id="chapter-conclusion" class="modal-chapter" contenteditable="true">
+                    <h2 class="text-2xl font-bold">Beyond the Sprint: A Lifestyle</h2>
+                    <p>This protocol is a catalyst. After an initial phase, you must transition to a sustainable maintenance phase. This involves recalculating your calorie needs for your new weight and adjusting training volume to prevent burnout. The habits you build now are the foundation for long-term success.</p>
+                </div>
+                 <button id="save-protocol-text-btn" class="mt-6 py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-primary);">Save Protocol Text</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Exercise Modal -->
+    <div id="add-exercise-modal" class="modal">
+        <div class="modal-content max-w-md">
+            <div class="w-full p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">Add New Exercise</h2>
+                    <button id="close-add-exercise-modal" class="text-2xl">&times;</button>
+                </div>
+                <form id="add-exercise-form">
+                    <div class="mb-4">
+                        <label for="ex-name" class="block text-sm font-medium">Exercise Name</label>
+                        <input type="text" id="ex-name" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="ex-sets" class="block text-sm font-medium">Sets</label>
+                        <input type="number" id="ex-sets" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="ex-reps" class="block text-sm font-medium">Reps</label>
+                        <input type="text" id="ex-reps" class="mt-1 block w-full p-2 rounded" style="background-color: var(--bg-primary); color: var(--text-primary);" required>
+                    </div>
+                    <button type="submit" class="w-full py-2 px-4 rounded-md text-white font-semibold" style="background-color: var(--accent-primary);">Add Exercise</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorite Meals Modal -->
+    <div id="favorite-meals-modal" class="modal">
+        <div class="modal-content max-w-md">
+            <div class="w-full p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">Favorite Meals</h2>
+                    <button id="close-favorites-modal" class="text-2xl">&times;</button>
+                </div>
+                <ul id="favorites-list" class="space-y-2 max-h-96 overflow-y-auto">
+                    <!-- Favorite meals will be injected here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Fields Modal -->
+    <div id="manage-fields-modal" class="modal">
+        <div class="modal-content max-w-md">
+            <div class="w-full p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">Manage Measurement Fields</h2>
+                    <button id="close-manage-fields-modal" class="text-2xl">&times;</button>
+                </div>
+                <ul id="fields-list" class="space-y-2 max-h-96 overflow-y-auto">
+                    <!-- Fields will be injected here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert/Confirm Modal -->
+    <div id="alert-modal" class="modal">
+        <div class="modal-content max-w-sm p-6">
+            <h3 id="alert-title" class="text-lg font-bold mb-4">Alert</h3>
+            <p id="alert-message" class="mb-6"></p>
+            <div id="alert-buttons" class="flex justify-end gap-4">
+                <button id="alert-ok" class="py-2 px-4 rounded-md text-white" style="background-color: var(--accent-primary);">OK</button>
+                <button id="alert-confirm" class="py-2 px-4 rounded-md text-white" style="background-color: var(--accent-primary);">Confirm</button>
+                <button id="alert-cancel" class="py-2 px-4 rounded-md" style="background-color: var(--bg-tertiary);">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Measurement Tooltip -->
+    <div id="measurement-tooltip"></div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // --- DOM ELEMENT CACHE ---
+    const dom = {
+        themeSelector: document.getElementById('theme-selector'),
+        masterDatePicker: document.getElementById('master-date-picker'),
+        nav: {
+            data: document.getElementById('nav-data'),
+            diet: document.getElementById('nav-diet'),
+            workout: document.getElementById('nav-workout'),
+            measurements: document.getElementById('nav-measurements'),
+        },
+        sections: {
+            data: document.getElementById('section-data'),
+            diet: document.getElementById('section-diet'),
+            workout: document.getElementById('section-workout'),
+            measurements: document.getElementById('section-measurements'),
+        },
+        weightForm: document.getElementById('weight-form'),
+        weightInput: document.getElementById('weight-input'),
+        openProtocolModalBtn: document.getElementById('open-protocol-modal'),
+        exportDataBtn: document.getElementById('export-data-btn'),
+        importDataBtn: document.getElementById('import-data-btn'),
+        importDataInput: document.getElementById('import-data-input'),
+        completionGrid: document.getElementById('completion-grid'),
+        nutritionChart: document.getElementById('nutritionChart'),
+        weightChart: document.getElementById('weightChart'),
+        dietViewToggle: document.getElementById('diet-view-toggle'),
+        dietTodayView: document.getElementById('diet-today-view'),
+        dietHistoryView: document.getElementById('diet-history-view'),
+        calorieGoalInput: document.getElementById('calorie-goal-input'),
+        caloriesTotal: document.getElementById('calories-total'),
+        caloriesProgress: document.getElementById('calories-progress'),
+        proteinGoalInput: document.getElementById('protein-goal-input'),
+        proteinTotal: document.getElementById('protein-total'),
+        proteinProgress: document.getElementById('protein-progress'),
+        fatGoalInput: document.getElementById('fat-goal-input'),
+        fatTotal: document.getElementById('fat-total'),
+        fatProgress: document.getElementById('fat-progress'),
+        carbGoalInput: document.getElementById('carb-goal-input'),
+        carbTotal: document.getElementById('carb-total'),
+        carbProgress: document.getElementById('carb-progress'),
+        logMealForm: document.getElementById('log-meal-form'),
+        logDateDisplay: document.getElementById('log-date-display'),
+        mealName: document.getElementById('meal-name'),
+        mealCalories: document.getElementById('meal-calories'),
+        mealProtein: document.getElementById('meal-protein'),
+        mealFat: document.getElementById('meal-fat'),
+        mealCarbs: document.getElementById('meal-carbs'),
+        openFavoritesBtn: document.getElementById('open-favorites-btn'),
+        logListDateDisplay: document.getElementById('log-list-date-display'),
+        mealList: document.getElementById('meal-list'),
+        prevWeekBtn: document.getElementById('prev-week'),
+        weekDisplay: document.getElementById('week-display'),
+        nextWeekBtn: document.getElementById('next-week'),
+        historyLogDisplay: document.getElementById('history-log-display'),
+        workoutTabsContainer: document.getElementById('workout-tabs'),
+        workoutPlanContainer: document.getElementById('workout-plan'),
+        protocolModal: document.getElementById('protocol-modal'),
+        closeProtocolModalBtn: document.querySelector('#protocol-modal .close-button'),
+        modalNav: document.querySelector('#protocol-modal .modal-nav'),
+        modalBody: document.querySelector('#protocol-modal .modal-body'),
+        calc: {
+            age: document.getElementById('calc-age'),
+            gender: document.getElementById('calc-gender'),
+            weight: document.getElementById('calc-weight'),
+            height: document.getElementById('calc-height'),
+            activity: document.getElementById('calc-activity'),
+            goal: document.getElementById('calc-goal'),
+            calculateBtn: document.getElementById('calculate-macros-btn'),
+            results: document.getElementById('calc-results'),
+            resultCalories: document.getElementById('result-calories'),
+            resultProtein: document.getElementById('result-protein'),
+            resultFats: document.getElementById('result-fats'),
+            resultCarbs: document.getElementById('result-carbs'),
+            applyBtn: document.getElementById('apply-macros-btn'),
+        },
+        protocolChapters: {
+            calculator: document.getElementById('chapter-calculator'),
+            nutrition: document.getElementById('chapter-nutrition'),
+            training: document.getElementById('chapter-training'),
+            abs: document.getElementById('chapter-abs'),
+            conclusion: document.getElementById('chapter-conclusion'),
+        },
+        saveProtocolTextBtn: document.getElementById('save-protocol-text-btn'),
+        addExerciseModal: document.getElementById('add-exercise-modal'),
+        closeAddExerciseModalBtn: document.getElementById('close-add-exercise-modal'),
+        addExerciseForm: document.getElementById('add-exercise-form'),
+        ex: {
+            name: document.getElementById('ex-name'),
+            sets: document.getElementById('ex-sets'),
+            reps: document.getElementById('ex-reps'),
+        },
+        favoriteMealsModal: document.getElementById('favorite-meals-modal'),
+        closeFavoritesModalBtn: document.getElementById('close-favorites-modal'),
+        favoritesList: document.getElementById('favorites-list'),
+        manageFieldsModal: document.getElementById('manage-fields-modal'),
+        closeManageFieldsModalBtn: document.getElementById('close-manage-fields-modal'),
+        fieldsList: document.getElementById('fields-list'),
+        alertModal: document.getElementById('alert-modal'),
+        alertTitle: document.getElementById('alert-title'),
+        alertMessage: document.getElementById('alert-message'),
+        alertOk: document.getElementById('alert-ok'),
+        alertConfirm: document.getElementById('alert-confirm'),
+        alertCancel: document.getElementById('alert-cancel'),
+        measurementTooltip: document.getElementById('measurement-tooltip'),
+        measurementInputView: document.getElementById('measurement-input-view'),
+    };
+
+    // --- DEFAULT DATA ---
+    const defaultWorkoutData = {
+        day1: { title: "Day 1: Push & HIIT", am: { title: "Dumbbell HIIT Circuit (5 Rounds)", exercises: [{ name: "Dumbbell Thruster", details: "40s work, 20s rest" }, { name: "Burpee Over Dumbbell", details: "40s work, 20s rest" }, { name: "Renegade Row", details: "40s work, 20s rest" }] }, pm: { title: "Push Strength", exercises: [{ name: "Barbell Bench Press", sets: 4, reps: "8-12" }, { name: "Incline Dumbbell Press", sets: 3, reps: "8-12" }, { name: "Seated Dumbbell Shoulder Press", sets: 3, reps: "8-12" }, { name: "Dumbbell Lateral Raise", sets: 3, reps: "12-15" }, { name: "Dumbbell Overhead Tricep Extension", sets: 3, reps: "10-15" }, { name: "Bench Dips", sets: 3, reps: "To Failure" }] } },
+        day2: { title: "Day 2: Pull & HIIT", am: { title: "Medicine Ball MetCon (5 Rounds)", exercises: [{ name: "Medicine Ball Slams", details: "45s work, 15s rest" }, { name: "Medicine Ball Wall Balls", details: "45s work, 15s rest" }, { name: "Medicine Ball Russian Twists", details: "45s work, 15s rest" }] }, pm: { title: "Pull Strength", exercises: [{ name: "Barbell Bent-Over Row", sets: 4, reps: "8-12" }, { name: "Single-Arm Dumbbell Row", sets: 3, reps: "8-12 (each)" }, { name: "Lat Pulldown (or Bodyweight Rows)", sets: 3, reps: "10-15" }, { name: "Dumbbell Bicep Curls", sets: 3, reps: "10-15 (each)" }, { name: "Dumbbell Hammer Curls", sets: 3, reps: "10-15 (each)" }] } },
+        day3: { title: "Day 3: Legs & HIIT", am: { title: "Plyometric Leg Circuit (5 Rounds)", exercises: [{ name: "Bodyweight Jump Squats", details: "40s work, 20s rest" }, { name: "Alternating Lunge Jumps", details: "40s work, 20s rest" }, { name: "Skater Hops", details: "40s work, 20s rest" }] }, pm: { title: "Leg Strength", exercises: [{ name: "Barbell Back Squat", sets: 4, reps: "8-12" }, { name: "Dumbbell Romanian Deadlift (RDL)", sets: 3, reps: "10-15" }, { name: "Bulgarian Split Squat", sets: 3, reps: "10-12 (each)" }, { name: "Leg Extension", sets: 3, reps: "12-15" }, { name: "Lying Leg Curl", sets: 3, reps: "12-15" }] } },
+        day4: { title: "Day 4: Active Recovery & Core", am: { title: "Active Recovery", exercises: [{ name: "Brisk Walk", details: "30 minutes" }] }, pm: { title: "Core & Mobility Circuit (3-4 Rounds)", exercises: [{ name: "Plank", sets: "Hold", reps: "60s" }, { name: "Medicine Ball V-Ups", sets: 3, reps: "15" }, { name: "Hanging Leg Raises (or Lying)", sets: 3, reps: "15" }, { name: "Hip Flexor Stretch", sets: "Hold", reps: "30s each" }, { name: "Thoracic Spine Rotations", sets: 3, reps: "10 each" }] } },
+        day5: { title: "Day 5: Push (Strength) & HIIT", am: { title: "Repeat Day 1 HIIT", exercises: [{ name: "Dumbbell Thruster", details: "40s work, 20s rest" }, { name: "Burpee Over Dumbbell", details: "40s work, 20s rest" }, { name: "Renegade Row", details: "40s work, 20s rest" }] }, pm: { title: "Push Strength Focus", exercises: [{ name: "Incline Barbell Bench Press", sets: 4, reps: "6-8" }, { name: "Flat Dumbbell Press", sets: 4, reps: "6-8" }, { name: "Standing Barbell Overhead Press", sets: 4, reps: "6-8" }, { name: "Close-Grip Barbell Bench Press", sets: 3, reps: "8-10" }, { name: "Dumbbell Tricep Kickbacks", sets: 3, reps: "10-12" }] } },
+        day6: { title: "Day 6: Pull (Hypertrophy) & HIIT", am: { title: "Repeat Day 2 HIIT", exercises: [{ name: "Medicine Ball Slams", details: "45s work, 15s rest" }, { name: "Medicine Ball Wall Balls", details: "45s work, 15s rest" }, { name: "Medicine Ball Russian Twists", details: "45s work, 15s rest" }] }, pm: { title: "Pull Hypertrophy Focus", exercises: [{ name: "Chest-Supported Dumbbell Row", sets: 4, reps: "10-15" }, { name: "Seated Cable Row", sets: 4, reps: "10-15" }, { name: "Dumbbell Pullover", sets: 3, reps: "12-15" }, { name: "Incline Dumbbell Curl", sets: 3, reps: "12-15 (each)" }, { name: "Concentration Curl", sets: 3, reps: "12-15 (each)" }] } },
+        day7: { title: "Day 7: Legs (Unilateral) & HIIT", am: { title: "Repeat Day 3 HIIT", exercises: [{ name: "Bodyweight Jump Squats", details: "40s work, 20s rest" }, { name: "Alternating Lunge Jumps", details: "40s work, 20s rest" }, { name: "Skater Hops", details: "40s work, 20s rest" }] }, pm: { title: "Unilateral & Posterior Chain", exercises: [{ name: "Dumbbell Goblet Squat", sets: 4, reps: "12-15" }, { name: "Dumbbell Step-Ups", sets: 3, reps: "10-12 (each)" }, { name: "Barbell Hip Thrust", sets: 4, reps: "12-15" }, { name: "Standing Dumbbell Calf Raise", sets: 4, reps: "15-20" }] } }
+    };
+    const defaultBodyParts = ['neck', 'shoulders', 'chest', 'bicep', 'forearm', 'waist', 'hips', 'glutes', 'thigh', 'calf'];
+    const defaultMeasurementFieldNames = {
+        'neck': 'Neck', 'shoulders': 'Shoulders', 'chest': 'Chest', 'bicep': 'Bicep',
+        'forearm': 'Forearm', 'waist': 'Waist (Navel)', 'hips': 'Hips', 'glutes': 'Glutes',
+        'thigh': 'Thigh', 'calf': 'Calf'
+    };
+    const measurementInstructions = {
+        'neck': 'Measure around the middle of your neck.',
+        'shoulders': 'Measure from the tip of one shoulder to the tip of the other. Best done by a partner.',
+        'chest': 'Measure around the fullest part of your chest, under your armpits.',
+        'bicep': 'Measure around the largest part of your upper arm, flexed.',
+        'forearm': 'Measure around the fullest part of your forearm, below the elbow.',
+        'waist': 'Measure around your torso at the level of your belly button. Keep the tape parallel to the floor.',
+        'hips': 'Measure around the widest part of your hips.',
+        'glutes': 'Measure around the fullest part of your glutes (buttocks).',
+        'thigh': 'Measure around the fullest part of your upper leg.',
+        'calf': 'Measure around the widest part of your lower leg.',
+        'weight': 'Weigh yourself in the morning, after using the restroom, and before eating or drinking.',
+        'size': 'Select your current T-shirt or clothing size.'
+    };
+    const defaultAppState = {
+        theme: 'theme-default',
+        calorieGoal: 2817, proteinGoal: 200, fatGoal: 78, carbGoal: 329,
+        protocolText: {}, favoriteMeals: [], measurementsLog: {},
+        visibleMeasurements: [...defaultBodyParts],
+        measurementFieldNames: { ...defaultMeasurementFieldNames },
+    };
+
+    // --- GLOBAL STATE ---
+    let appState = {};
+    let workoutData = {};
+    let weightLog = [];
+    let dietLogs = {};
+    let workoutCompletion = {};
+    let historyWeekStart;
+    let currentDate = new Date();
+    let activeWorkoutDayKey = null;
+
+    // --- DATE UTILITY FUNCTIONS ---
+    const localDateFns = {
+        format: (date, formatStr) => {
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = (d.getMonth() + 1).toString().padStart(2, '0');
+            const day = d.getDate().toString().padStart(2, '0');
+            if (formatStr === 'yyyy-MM-dd') return `${year}-${month}-${day}`;
+            if (formatStr === 'MMM d, eee') {
+                const monthShort = d.toLocaleString('default', { month: 'short' });
+                const dayOfWeek = d.toLocaleString('default', { weekday: 'short' });
+                return `${monthShort} ${d.getDate()}, ${dayOfWeek}`;
+            }
+             if (formatStr === 'E') return d.toLocaleString('default', { weekday: 'short' })[0];
+            return d.toISOString();
+        },
+        startOfWeek: (date, options) => {
+            const d = new Date(date);
+            const day = d.getDay();
+            const diff = d.getDate() - day + (options.weekStartsOn === 1 ? (day === 0 ? -6 : 1) : 0);
+            d.setDate(diff);
+            d.setHours(0, 0, 0, 0);
+            return d;
+        },
+        endOfWeek: (date, options) => {
+            const start = localDateFns.startOfWeek(date, options);
+            start.setDate(start.getDate() + 6);
+            return start;
+        },
+        addDays: (date, amount) => { const d = new Date(date); d.setDate(d.getDate() + amount); return d; },
+        addWeeks: (date, amount) => { const d = new Date(date); d.setDate(d.getDate() + (amount * 7)); return d; },
+        subWeeks: (date, amount) => { const d = new Date(date); d.setDate(d.getDate() - (amount * 7)); return d; },
+        compareAsc: (dateA, dateB) => new Date(dateA).getTime() - new Date(dateB).getTime()
+    };
+
+    // --- LOCAL STORAGE & STATE MANAGEMENT ---
+    function loadState() {
+        appState = JSON.parse(localStorage.getItem('fitnessApp_appState')) || JSON.parse(JSON.stringify(defaultAppState));
+        if (appState.bodyPartPositions) delete appState.bodyPartPositions;
+        if (appState.bodyMapImage) delete appState.bodyMapImage;
+        if (!appState.measurementFieldNames) appState.measurementFieldNames = { ...defaultMeasurementFieldNames };
+        if (!appState.favoriteMeals) appState.favoriteMeals = [];
+        if (appState.fatGoal === undefined) appState.fatGoal = defaultAppState.fatGoal;
+        if (appState.carbGoal === undefined) appState.carbGoal = defaultAppState.carbGoal;
+        if (!appState.measurementsLog) appState.measurementsLog = {};
+        if (!appState.visibleMeasurements) appState.visibleMeasurements = [...defaultBodyParts];
+
+        workoutData = JSON.parse(localStorage.getItem('fitnessApp_workoutData')) || defaultWorkoutData;
+        weightLog = JSON.parse(localStorage.getItem('fitnessApp_weightLog')) || [];
+        dietLogs = JSON.parse(localStorage.getItem('fitnessApp_dietLogs')) || {};
+        workoutCompletion = JSON.parse(localStorage.getItem('fitnessApp_workoutCompletion')) || {};
+        historyWeekStart = localDateFns.startOfWeek(new Date(), { weekStartsOn: 1 });
+    }
+
+    function saveState() {
+        localStorage.setItem('fitnessApp_appState', JSON.stringify(appState));
+        localStorage.setItem('fitnessApp_workoutData', JSON.stringify(workoutData));
+        localStorage.setItem('fitnessApp_weightLog', JSON.stringify(weightLog));
+        localStorage.setItem('fitnessApp_dietLogs', JSON.stringify(dietLogs));
+        localStorage.setItem('fitnessApp_workoutCompletion', JSON.stringify(workoutCompletion));
+    }
+
+    // --- INITIALIZE APP ---
+    function initializeApp() {
+        loadState();
+        dom.masterDatePicker.value = localDateFns.format(currentDate, 'yyyy-MM-dd');
+        initializeCharts();
+        applyTheme(appState.theme);
+        renderAll();
+        addEventListeners();
+    }
+
+    function renderAll() {
+        renderCharts();
+        renderDietLog();
+        renderDietHistory();
+        renderWorkoutPlan(activeWorkoutDayKey);
+        renderCompletionGrid();
+        renderProtocolText();
+        renderMeasurements();
+    }
+
+    // --- UTILITY FUNCTIONS ---
+    const getSelectedDateKey = () => localDateFns.format(currentDate, 'yyyy-MM-dd');
+    const formatDateForDisplay = (date) => localDateFns.format(date, 'MMM d, eee');
+
+    // --- THEME MANAGEMENT ---
+    function applyTheme(themeName) {
+        document.body.className = '';
+        document.body.classList.add(themeName);
+        if(dom.themeSelector) dom.themeSelector.value = themeName;
+
+        if (window.nutritionChart && window.weightChart) {
+            const style = getComputedStyle(document.body);
+            const accentPrimary = style.getPropertyValue('--accent-primary').trim();
+            const accentSecondary = style.getPropertyValue('--accent-secondary').trim();
+            const textPrimary = style.getPropertyValue('--text-primary').trim();
+            const textSecondary = style.getPropertyValue('--text-tertiary').trim();
+
+            const nc = window.nutritionChart;
+            nc.data.datasets[0].borderColor = accentPrimary; nc.data.datasets[0].backgroundColor = accentPrimary + '33';
+            nc.data.datasets[1].borderColor = accentSecondary; nc.data.datasets[1].backgroundColor = accentSecondary + '33';
+            nc.data.datasets[2].borderColor = textPrimary; nc.data.datasets[2].backgroundColor = textPrimary + '33';
+            nc.data.datasets[3].borderColor = textSecondary; nc.data.datasets[3].backgroundColor = textSecondary + '33';
+            nc.options.plugins.annotation.annotations.calorieGoalLine.borderColor = accentPrimary;
+            nc.options.plugins.annotation.annotations.proteinGoalLine.borderColor = accentSecondary;
+            nc.options.plugins.annotation.annotations.fatGoalLine.borderColor = textPrimary;
+            nc.options.plugins.annotation.annotations.carbGoalLine.borderColor = textSecondary;
+            nc.update();
+
+            const wc = window.weightChart;
+            wc.data.datasets[0].borderColor = accentPrimary; wc.data.datasets[0].backgroundColor = accentPrimary + '33';
+            wc.update();
+        }
+    };
+
+    function handleThemeChange(e) {
+        appState.theme = e.target.value;
+        applyTheme(appState.theme);
+        saveState();
+    };
+
+    // --- NAVIGATION & MODALS ---
+    function handleNavClick(e) {
+        const link = e.currentTarget;
+        document.querySelector('.nav-link.active').classList.remove('active');
+        link.classList.add('active');
+        document.querySelector('section.active').classList.remove('active');
+        document.getElementById('section-' + link.id.split('-')[1]).classList.add('active');
+    }
+
+    function openProtocolModal() { dom.protocolModal.style.display = 'flex'; }
+    function closeProtocolModal() { dom.protocolModal.style.display = 'none'; }
+
+    function handleModalNav(e) {
+        dom.modalNav.querySelector('a.active').classList.remove('active');
+        e.target.classList.add('active');
+        dom.protocolModal.querySelector('.modal-chapter.active').classList.remove('active');
+        document.getElementById('chapter-' + e.target.dataset.chapter).classList.add('active');
+    }
+
+    // --- CUSTOM ALERT/CONFIRM MODAL ---
+    function showAlert(message) {
+        dom.alertMessage.textContent = message;
+        dom.alertOk.style.display = 'block';
+        dom.alertConfirm.style.display = 'none';
+        dom.alertCancel.style.display = 'none';
+        dom.alertModal.style.display = 'flex';
+        return new Promise(resolve => {
+            dom.alertOk.onclick = () => { dom.alertModal.style.display = 'none'; resolve(); };
+        });
+    }
+
+    function showConfirm(message, onConfirm) {
+        dom.alertMessage.textContent = message;
+        dom.alertOk.style.display = 'none';
+        dom.alertConfirm.style.display = 'block';
+        dom.alertCancel.style.display = 'block';
+        dom.alertModal.style.display = 'flex';
+        dom.alertConfirm.onclick = () => { dom.alertModal.style.display = 'none'; if (onConfirm) onConfirm(); };
+        dom.alertCancel.onclick = () => { dom.alertModal.style.display = 'none'; };
+    }
+
+    // --- DATA SECTION: CHARTS & COMPLETION GRID ---
+    function initializeCharts() {
+        const nutritionCtx = dom.nutritionChart.getContext('2d');
+        window.nutritionChart = new Chart(nutritionCtx, {
+            type: 'line',
+            data: { labels: [], datasets: [
+                { label: 'Calories', data: [], tension: 0.1, yAxisID: 'yCalories' },
+                { label: 'Protein (g)', data: [], tension: 0.1, yAxisID: 'yMacros' },
+                { label: 'Fat (g)', data: [], tension: 0.1, yAxisID: 'yMacros' },
+                { label: 'Carbs (g)', data: [], tension: 0.1, yAxisID: 'yMacros' }
+            ]},
+            options: { responsive: true,
+                scales: {
+                    x: { type: 'category' },
+                    yCalories: { type: 'linear', position: 'left', title: { display: true, text: 'Calories (kcal)' } },
+                    yMacros: { type: 'linear', position: 'right', title: { display: true, text: 'Macronutrients (g)' }, grid: { drawOnChartArea: false } }
+                },
+                plugins: {
+                    annotation: { annotations: {
+                        calorieGoalLine: { type: 'line', yMin: () => appState.calorieGoal, yMax: () => appState.calorieGoal, borderWidth: 2, borderDash: [6, 6], scaleID: 'yCalories', label: { content: 'Calorie Goal', enabled: true, position: 'start' } },
+                        proteinGoalLine: { type: 'line', yMin: () => appState.proteinGoal, yMax: () => appState.proteinGoal, borderWidth: 2, borderDash: [6, 6], scaleID: 'yMacros', label: { content: 'Protein Goal', enabled: true, position: 'start' } },
+                        fatGoalLine: { type: 'line', yMin: () => appState.fatGoal, yMax: () => appState.fatGoal, borderWidth: 2, borderDash: [6, 6], scaleID: 'yMacros', label: { content: 'Fat Goal', enabled: true, position: 'center' } },
+                        carbGoalLine: { type: 'line', yMin: () => appState.carbGoal, yMax: () => appState.carbGoal, borderWidth: 2, borderDash: [6, 6], scaleID: 'yMacros', label: { content: 'Carb Goal', enabled: true, position: 'end' } }
+                    }}
+                }
+            }
+        });
+
+        const weightCtx = dom.weightChart.getContext('2d');
+        window.weightChart = new Chart(weightCtx, {
+            type: 'line',
+            data: { labels: [], datasets: [ { label: 'Weight (kg)', data: [], tension: 0.1 } ]},
+            options: { responsive: true, scales: { x: { type: 'category' } } }
+        });
+    }
+
+    function renderCharts() {
+        const sortedWeight = [...weightLog].sort((a,b) => localDateFns.compareAsc(a.x, b.x));
+        const dietData = Object.entries(dietLogs).map(([date, meals]) => ({
+            x: date,
+            calories: meals.reduce((sum, meal) => sum + (meal.calories || 0), 0),
+            protein: meals.reduce((sum, meal) => sum + (meal.protein || 0), 0),
+            fat: meals.reduce((sum, meal) => sum + (meal.fat || 0), 0),
+            carbs: meals.reduce((sum, meal) => sum + (meal.carbs || 0), 0),
+        })).sort((a,b) => localDateFns.compareAsc(a.x, b.x));
+
+        const allDates = [...new Set([...sortedWeight.map(d => d.x), ...dietData.map(d => d.x)])].sort(localDateFns.compareAsc);
+
+        window.nutritionChart.data.labels = allDates;
+        window.nutritionChart.data.datasets[0].data = allDates.map(date => dietData.find(d => d.x === date)?.calories || null);
+        window.nutritionChart.data.datasets[1].data = allDates.map(date => dietData.find(d => d.x === date)?.protein || null);
+        window.nutritionChart.data.datasets[2].data = allDates.map(date => dietData.find(d => d.x === date)?.fat || null);
+        window.nutritionChart.data.datasets[3].data = allDates.map(date => dietData.find(d => d.x === date)?.carbs || null);
+        window.nutritionChart.update();
+
+        window.weightChart.data.labels = allDates;
+        window.weightChart.data.datasets[0].data = allDates.map(date => sortedWeight.find(d => d.x === date)?.y || null);
+        window.weightChart.update();
+    }
+
+    function handleWeightSubmit(e) {
+        e.preventDefault();
+        const weight = parseFloat(dom.weightInput.value);
+        if (!weight) return;
+        updateWeightLog(weight);
+        dom.weightInput.value = '';
+        renderCharts();
+        renderMeasurements();
+    }
+
+    function updateWeightLog(weight) {
+        const dateKey = getSelectedDateKey();
+        const existingEntryIndex = weightLog.findIndex(d => d.x === dateKey);
+        if (existingEntryIndex > -1) { weightLog[existingEntryIndex].y = weight; }
+        else { weightLog.push({ x: dateKey, y: weight }); }
+        saveState();
+    }
+
+    function renderCompletionGrid() {
+        dom.completionGrid.innerHTML = '';
+        const weekStart = localDateFns.startOfWeek(currentDate, { weekStartsOn: 1 });
+        for (let i = 0; i < 7; i++) {
+            const day = localDateFns.addDays(weekStart, i);
+            const dayKey = localDateFns.format(day, 'yyyy-MM-dd');
+            const dayInitial = localDateFns.format(day, 'E');
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'text-center';
+            const dot = document.createElement('div');
+            dot.className = 'completion-dot';
+            if (workoutCompletion[dayKey]?.completed) { dot.classList.add('completed'); }
+            dayDiv.innerHTML = `<p class="text-xs mb-1" style="color: var(--text-tertiary);">${dayInitial}</p>`;
+            dayDiv.appendChild(dot);
+            dom.completionGrid.appendChild(dayDiv);
+        }
+    }
+
+    // --- DIET SECTION ---
+    function handleGoalChange() {
+        appState.calorieGoal = parseInt(dom.calorieGoalInput.value) || 0;
+        appState.proteinGoal = parseInt(dom.proteinGoalInput.value) || 0;
+        appState.fatGoal = parseInt(dom.fatGoalInput.value) || 0;
+        appState.carbGoal = parseInt(dom.carbGoalInput.value) || 0;
+        saveState();
+        renderDietLog();
+        renderCharts();
+    }
+
+    function renderDietLog() {
+        const dateKey = getSelectedDateKey();
+        dom.logDateDisplay.textContent = formatDateForDisplay(currentDate);
+        dom.logListDateDisplay.textContent = formatDateForDisplay(currentDate);
+
+        const todaysLog = dietLogs[dateKey] || [];
+        dom.mealList.innerHTML = '';
+        let totalCalories = 0, totalProtein = 0, totalFat = 0, totalCarbs = 0;
+
+        todaysLog.forEach((meal, index) => {
+            totalCalories += meal.calories || 0; totalProtein += meal.protein || 0;
+            totalFat += meal.fat || 0; totalCarbs += meal.carbs || 0;
+
+            const isFavorited = appState.favoriteMeals.some(fav => fav.name.toLowerCase() === meal.name.toLowerCase());
+            const li = document.createElement('li');
+            li.className = 'flex justify-between items-center p-3 rounded-lg glassmorphic';
+            li.innerHTML = `
+                <div class="flex items-center flex-wrap">
+                    <button class="fav-meal-btn mr-4 ${isFavorited ? 'favorited' : ''}" data-name="${meal.name}" data-calories="${meal.calories}" data-protein="${meal.protein}" data-fat="${meal.fat}" data-carbs="${meal.carbs}" title="Save to Favorites"><i class="fas fa-star"></i></button>
+                    <div>
+                        <span class="font-medium">${meal.name}</span>
+                        <span class="text-sm ml-3" style="color: var(--text-tertiary);">C:${meal.calories} P:${meal.protein} F:${meal.fat} C:${meal.carbs}</span>
+                    </div>
+                </div>
+                <button data-index="${index}" class="remove-meal-btn text-red-500 hover:text-red-400 text-xl">&times;</button>
+            `;
+            dom.mealList.appendChild(li);
+        });
+
+        dom.calorieGoalInput.value = appState.calorieGoal;
+        dom.proteinGoalInput.value = appState.proteinGoal;
+        dom.fatGoalInput.value = appState.fatGoal;
+        dom.carbGoalInput.value = appState.carbGoal;
+
+        dom.caloriesTotal.textContent = `${totalCalories} / ${appState.calorieGoal}`;
+        dom.caloriesProgress.style.width = `${Math.min(100, (totalCalories / (appState.calorieGoal || 1)) * 100)}%`;
+        dom.caloriesProgress.style.backgroundColor = 'var(--accent-primary)';
+        dom.proteinTotal.textContent = `${totalProtein} / ${appState.proteinGoal} g`;
+        dom.proteinProgress.style.width = `${Math.min(100, (totalProtein / (appState.proteinGoal || 1)) * 100)}%`;
+        dom.proteinProgress.style.backgroundColor = 'var(--accent-secondary)';
+        dom.fatTotal.textContent = `${totalFat} / ${appState.fatGoal} g`;
+        dom.fatProgress.style.width = `${Math.min(100, (totalFat / (appState.fatGoal || 1)) * 100)}%`;
+        dom.fatProgress.style.backgroundColor = 'var(--text-primary)';
+        dom.carbTotal.textContent = `${totalCarbs} / ${appState.carbGoal} g`;
+        dom.carbProgress.style.width = `${Math.min(100, (totalCarbs / (appState.carbGoal || 1)) * 100)}%`;
+        dom.carbProgress.style.backgroundColor = 'var(--text-secondary)';
+    }
+
+    function handleMealSubmit(e) {
+        e.preventDefault();
+        const meal = {
+            name: dom.mealName.value,
+            calories: parseInt(dom.mealCalories.value) || 0,
+            protein: parseInt(dom.mealProtein.value) || 0,
+            fat: parseInt(dom.mealFat.value) || 0,
+            carbs: parseInt(dom.mealCarbs.value) || 0,
+        };
+        const dateKey = getSelectedDateKey();
+        if (!dietLogs[dateKey]) { dietLogs[dateKey] = []; }
+        dietLogs[dateKey].push(meal);
+        e.target.reset();
+        saveState();
+        renderDietLog(); renderDietHistory(); renderCharts();
+    }
+
+    function handleMealListClick(e) {
+        const removeBtn = e.target.closest('.remove-meal-btn');
+        const favBtn = e.target.closest('.fav-meal-btn');
+
+        if (removeBtn) {
+            const index = removeBtn.dataset.index;
+            const dateKey = getSelectedDateKey();
+            dietLogs[dateKey].splice(index, 1);
+            saveState();
+            renderDietLog(); renderDietHistory(); renderCharts();
+        }
+        if (favBtn) {
+            const meal = {
+                name: favBtn.dataset.name, calories: parseInt(favBtn.dataset.calories),
+                protein: parseInt(favBtn.dataset.protein), fat: parseInt(favBtn.dataset.fat),
+                carbs: parseInt(favBtn.dataset.carbs),
+            };
+            const existingIndex = appState.favoriteMeals.findIndex(fav => fav.name.toLowerCase() === meal.name.toLowerCase());
+            if (existingIndex > -1) { appState.favoriteMeals.splice(existingIndex, 1); }
+            else { appState.favoriteMeals.push(meal); }
+            saveState();
+            renderDietLog();
+        }
+    }
+
+    function renderDietHistory() {
+        dom.historyLogDisplay.innerHTML = '';
+        dom.weekDisplay.textContent = `${formatDateForDisplay(historyWeekStart)} - ${formatDateForDisplay(localDateFns.endOfWeek(historyWeekStart, { weekStartsOn: 1 }))}`;
+        for (let i = 0; i < 7; i++) {
+            const day = localDateFns.addDays(historyWeekStart, i);
+            const dayKey = localDateFns.format(day, 'yyyy-MM-dd');
+            const log = dietLogs[dayKey];
+            const dayDiv = document.createElement('details');
+            dayDiv.className = 'p-3 rounded-lg glassmorphic';
+            let summaryHTML = `<summary class="font-semibold cursor-pointer flex justify-between flex-wrap"><span>${formatDateForDisplay(day)}</span>`;
+            if (log && log.length > 0) {
+                const totalCals = log.reduce((sum, m) => sum + (m.calories || 0), 0);
+                const totalProt = log.reduce((sum, m) => sum + (m.protein || 0), 0);
+                const totalFat = log.reduce((sum, m) => sum + (m.fat || 0), 0);
+                const totalCarb = log.reduce((sum, m) => sum + (m.carbs || 0), 0);
+                summaryHTML += `<span class="text-xs">C:${totalCals} P:${totalProt} F:${totalFat} C:${totalCarb}</span>`;
+            } else { summaryHTML += `<span>No Data</span>`; }
+            summaryHTML += `</summary>`;
+            let detailsHTML = '<ul class="mt-2 space-y-1 pl-4 border-l-2" style="border-color: var(--accent-primary);">';
+            if (log && log.length > 0) {
+                log.forEach(meal => { detailsHTML += `<li class="text-sm">${meal.name}: C:${meal.calories || 0}, P:${meal.protein || 0}, F:${meal.fat || 0}, C:${meal.carbs || 0}</li>`; });
+            } else { detailsHTML += `<li>No meals logged.</li>`; }
+            detailsHTML += '</ul>';
+            dayDiv.innerHTML = summaryHTML + detailsHTML;
+            dom.historyLogDisplay.appendChild(dayDiv);
+        }
+    }
+
+    function openFavoritesModal() {
+        dom.favoritesList.innerHTML = '';
+        if (appState.favoriteMeals.length === 0) {
+            dom.favoritesList.innerHTML = `<li style="color: var(--text-tertiary);">No favorite meals saved yet.</li>`;
+        } else {
+            appState.favoriteMeals.forEach(meal => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center p-2 rounded-lg cursor-pointer';
+                li.style.backgroundColor = 'var(--bg-primary)';
+                li.innerHTML = `
+                    <div>
+                        <span class="font-medium">${meal.name}</span>
+                        <span class="text-sm ml-3" style="color: var(--text-tertiary);">C:${meal.calories} P:${meal.protein} F:${meal.fat} C:${meal.carbs}</span>
+                    </div>
+                    <button class="remove-fav-btn text-red-500 text-lg">&times;</button>
+                `;
+                li.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('remove-fav-btn')) {
+                        const indexToRemove = appState.favoriteMeals.findIndex(fav => fav.name.toLowerCase() === meal.name.toLowerCase());
+                        if (indexToRemove > -1) {
+                            appState.favoriteMeals.splice(indexToRemove, 1);
+                            saveState(); openFavoritesModal(); renderDietLog();
+                        }
+                    } else {
+                        dom.mealName.value = meal.name;
+                        dom.mealCalories.value = meal.calories;
+                        dom.mealProtein.value = meal.protein;
+                        dom.mealFat.value = meal.fat;
+                        dom.mealCarbs.value = meal.carbs;
+                        dom.favoriteMealsModal.style.display = 'none';
+                    }
+                });
+                dom.favoritesList.appendChild(li);
+            });
+        }
+        dom.favoriteMealsModal.style.display = 'flex';
+    }
+
+    // --- WORKOUT SECTION ---
+    function renderWorkoutPlan(dayToActivate = null) {
+        dom.workoutTabsContainer.innerHTML = '';
+        dom.workoutPlanContainer.innerHTML = '';
+        const dateKey = getSelectedDateKey();
+        Object.entries(workoutData).forEach(([dayId, dayData]) => {
+            const dayName = dayData.title.split(':')[0];
+            const tab = document.createElement('button');
+            tab.className = 'workout-tab p-4 font-semibold border-b-2 border-transparent';
+            tab.textContent = dayName; tab.dataset.target = dayId;
+            dom.workoutTabsContainer.appendChild(tab);
+            const dayElement = document.createElement('div');
+            dayElement.id = dayId; dayElement.className = 'workout-day space-y-6';
+
+            const renderSession = (session, type) => {
+                let exerciseHTML = '';
+                if (session && session.exercises) {
+                    session.exercises.forEach((ex, exIndex) => {
+                        const isChecked = workoutCompletion[dateKey]?.[ex.name] || false;
+                        exerciseHTML += `
+                            <li class="flex justify-between items-center py-3 border-b" style="border-color: var(--bg-primary);">
+                                <div class="flex-1">
+                                    <input type="checkbox" id="${dayId}-${type}-${exIndex}" class="task-checkbox" data-exercisename="${ex.name}" ${isChecked ? 'checked' : ''}>
+                                    <label for="${dayId}-${type}-${exIndex}" class="flex items-center cursor-pointer">
+                                        <span class="checkbox-visual"><i class="fas fa-check"></i></span>
+                                        <div>
+                                            <span class="font-medium exercise-name">${ex.name}</span>
+                                            <span class="text-sm ml-3" style="color: var(--text-tertiary);">${ex.details || `${ex.sets} sets x ${ex.reps} reps`}</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name)}" target="_blank" class="text-red-500 mx-2"><i class="fas fa-magnifying-glass"></i></a>
+                                <button class="remove-exercise-btn text-red-500" data-dayid="${dayId}" data-type="${type}" data-index="${exIndex}">&times;</button>
+                            </li>`;
+                    });
+                }
+                return `<div class="p-5 rounded-lg glassmorphic">
+                    <h4 class="font-semibold text-lg mb-2">${type === 'am' ? '<i class="fas fa-sun mr-2 text-yellow-400"></i>' : '<i class="fas fa-moon mr-2" style="color: var(--accent-secondary);"></i>'} ${session.title}</h4>
+                    <ul class="list-none space-y-1">${exerciseHTML}</ul>
+                    <button class="add-exercise-btn mt-4 text-sm" data-dayid="${dayId}" data-type="${type}">+ Add Exercise</button>
+                </div>`;
+            };
+
+            let totalExercises = (dayData.am?.exercises?.length || 0) + (dayData.pm?.exercises?.length || 0);
+            let completedExercises = Object.values(workoutCompletion[dateKey] || {}).filter(v => v === true && typeof v === 'boolean').length;
+            const progress = totalExercises > 0 ? (completedExercises / totalExercises) * 100 : 0;
+
+            let dayHTML = `<div class="flex flex-col sm:flex-row justify-between items-center">
+                <h3 class="text-xl font-bold mb-2 sm:mb-4 editable-title" data-dayid="${dayId}" title="Click to edit name">${dayData.title}</h3>
+                <div class="w-full sm:w-1/3"><div class="text-xs text-right mb-1">${Math.round(progress)}%</div><div class="w-full rounded-full h-2.5" style="background-color: var(--bg-primary);"><div class="h-2.5 rounded-full" style="width: ${progress}%; background-color: var(--accent-primary);"></div></div></div>
+            </div>`;
+
+            if (dayData.am) dayHTML += renderSession(dayData.am, 'am');
+            if (dayData.pm) dayHTML += renderSession(dayData.pm, 'pm');
+            dayElement.innerHTML = dayHTML;
+            dom.workoutPlanContainer.appendChild(dayElement);
+        });
+
+        document.querySelectorAll('.workout-tab').forEach(tab => tab.addEventListener('click', (e) => activateWorkoutTab(e.target)));
+        document.querySelectorAll('.task-checkbox').forEach(box => box.addEventListener('change', handleWorkoutCheck));
+        document.querySelectorAll('.remove-exercise-btn').forEach(btn => btn.addEventListener('click', handleRemoveExercise));
+        document.querySelectorAll('.add-exercise-btn').forEach(btn => btn.addEventListener('click', handleAddExerciseModal));
+        document.querySelectorAll('.editable-title').forEach(title => title.addEventListener('click', handleTitleEdit));
+
+        if (dayToActivate) {
+            const tabToActivate = dom.workoutTabsContainer.querySelector(`[data-target="${dayToActivate}"]`);
+            if (tabToActivate) activateWorkoutTab(tabToActivate);
+        } else { activateTodayWorkoutTab(); }
+    }
+
+    function activateWorkoutTab(tabToActivate) {
+        document.querySelectorAll('.workout-tab.active').forEach(t => t.classList.remove('active'));
+        tabToActivate.classList.add('active');
+        document.querySelectorAll('.workout-day.active').forEach(d => d.classList.remove('active'));
+        const targetDay = document.getElementById(tabToActivate.dataset.target);
+        if (targetDay) { targetDay.classList.add('active'); activeWorkoutDayKey = tabToActivate.dataset.target; }
+    }
+
+    function activateTodayWorkoutTab() {
+        const dayOfWeek = currentDate.getDay();
+        const todayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+        const tabs = document.querySelectorAll('.workout-tab');
+        if (tabs[todayIndex]) activateWorkoutTab(tabs[todayIndex]);
+    }
+
+    function handleWorkoutCheck(e) {
+        const exerciseName = e.target.dataset.exercisename;
+        const isChecked = e.target.checked;
+        const dateKey = getSelectedDateKey();
+        if (!workoutCompletion[dateKey]) workoutCompletion[dateKey] = {};
+        workoutCompletion[dateKey][exerciseName] = isChecked;
+
+        const dayTab = e.target.closest('.workout-day');
+        const allCheckboxes = dayTab.querySelectorAll('.task-checkbox');
+        const allChecked = Array.from(allCheckboxes).every(box => box.checked);
+        workoutCompletion[dateKey].completed = allChecked;
+
+        saveState();
+        renderWorkoutPlan(activeWorkoutDayKey);
+        renderCompletionGrid();
+    }
+
+    function handleRemoveExercise(e) {
+        const { dayid, type, index } = e.currentTarget.dataset;
+        showConfirm("Are you sure you want to delete this exercise?", () => {
+            workoutData[dayid][type].exercises.splice(index, 1);
+            saveState(); renderWorkoutPlan(activeWorkoutDayKey);
+        });
+    }
+
+    let currentDayId, currentSessionType;
+
+    function handleAddExerciseModal(e) {
+        currentDayId = e.target.dataset.dayid; currentSessionType = e.target.dataset.type;
+        dom.addExerciseModal.style.display = 'flex';
+    }
+
+    dom.addExerciseForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = dom.ex.name.value;
+        const sets = dom.ex.sets.value;
+        const reps = dom.ex.reps.value;
+        if(name && sets && reps) {
+            workoutData[currentDayId][currentSessionType].exercises.push({ name, sets, reps });
+            saveState(); renderWorkoutPlan(activeWorkoutDayKey);
+            dom.addExerciseModal.style.display = 'none'; dom.addExerciseForm.reset();
+        }
+    });
+
+    function handleTitleEdit(e) {
+        const dayId = e.target.dataset.dayid;
+        const currentTitle = workoutData[dayId].title;
+        const newTitle = prompt("Enter new name for this workout day:", currentTitle);
+        if (newTitle && newTitle !== currentTitle) {
+            workoutData[dayId].title = newTitle;
+            saveState(); renderWorkoutPlan(activeWorkoutDayKey);
+        }
+    }
+
+    // --- MEASUREMENTS SECTION ---
+    function renderMeasurements() {
+        const inputView = dom.measurementInputView;
+        if (!inputView) return;
+
+        const dateKey = getSelectedDateKey();
+        const todaysMeasurements = appState.measurementsLog[dateKey] || {};
+        const todaysWeight = weightLog.find(d => d.x === dateKey)?.y || '';
+
+        const table = document.createElement('table');
+        table.className = 'measurement-table';
+        table.innerHTML = `<thead>
+            <tr>
+                <th>Measurement</th>
+                <th>Value</th>
+                <th>Unit</th>
+                <th></th>
+            </tr>
+        </thead>`;
+        const tbody = document.createElement('tbody');
+
+        const allParts = ['weight', ...defaultBodyParts, 'size'];
+
+        allParts.forEach(part => {
+            if (!appState.visibleMeasurements.includes(part) && part !== 'weight' && part !=='size') return;
+
+            const value = (part === 'weight') ? todaysWeight : (todaysMeasurements[part] || '');
+            const unit = (part === 'weight') ? 'kg' : (part ==='size' ? '' : 'cm');
+            const displayName = appState.measurementFieldNames[part] || part;
+
+            const tr = document.createElement('tr');
+
+            let inputHTML;
+            if (part === 'size') {
+                 inputHTML = `<select data-part="size" id="input-${part}">
+                        <option value="">--</option> <option value="XS" ${value === 'XS' ? 'selected' : ''}>XS</option>
+                        <option value="S" ${value === 'S' ? 'selected' : ''}>S</option> <option value="M" ${value === 'M' ? 'selected' : ''}>M</option>
+                        <option value="L" ${value === 'L' ? 'selected' : ''}>L</option> <option value="XL" ${value === 'XL' ? 'selected' : ''}>XL</option>
+                        <option value="XXL" ${value === 'XXL' ? 'selected' : ''}>XXL</option> </select>`;
+            } else {
+                inputHTML = `<input type="number" step="0.1" id="input-${part}" data-part="${part}" value="${value}" placeholder="--">`;
+            }
+
+            tr.innerHTML = `
+                <td class="font-medium capitalize">${displayName}</td>
+                <td>${inputHTML}</td>
+                <td style="color: var(--text-tertiary);">${unit}</td>
+                <td><i class="fas fa-info-circle info-icon" data-part="${part}"></i></td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        inputView.innerHTML = '';
+        inputView.appendChild(table);
+    }
+
+    function handleMeasurementChange(e) {
+        const part = e.target.dataset.part;
+        const value = e.target.value;
+        const dateKey = getSelectedDateKey();
+
+        if (part === 'weight') { updateWeightLog(parseFloat(value)); renderCharts(); return; }
+        if (!appState.measurementsLog[dateKey]) { appState.measurementsLog[dateKey] = {}; }
+        appState.measurementsLog[dateKey][part] = value;
+        saveState();
+    }
+
+    function openManageFieldsModal() {
+        dom.fieldsList.innerHTML = '';
+
+        defaultBodyParts.forEach(part => {
+            const isVisible = appState.visibleMeasurements.includes(part);
+            const displayName = appState.measurementFieldNames[part] || part;
+            const li = document.createElement('li');
+            li.className = 'flex justify-between items-center p-2 rounded-lg';
+            li.style.backgroundColor = 'var(--bg-primary)';
+            li.innerHTML = `
+                <input type="text" value="${displayName}" data-part="${part}" class="field-name-input bg-transparent capitalize flex-grow p-1 rounded hover:bg-gray-700 focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <div class="flex items-center gap-4 ml-4">
+                    <label class="toggle-switch">
+                        <input type="checkbox" class="visibility-toggle" data-part="${part}" ${isVisible ? 'checked' : ''}>
+                        <span class="slider"></span>
+                    </label>
+                </div>`;
+            dom.fieldsList.appendChild(li);
+        });
+
+        dom.manageFieldsModal.style.display = 'flex';
+    }
+
+    function handleFieldVisibilityToggle(e) {
+        const part = e.target.dataset.part;
+        if (e.target.checked) {
+            if (!appState.visibleMeasurements.includes(part)) { appState.visibleMeasurements.push(part); }
+        } else { appState.visibleMeasurements = appState.visibleMeasurements.filter(p => p !== part); }
+        saveState(); renderMeasurements();
+    }
+
+    function handleEditFieldName(partKey, newName) {
+        if (newName && newName.trim() !== "") {
+            appState.measurementFieldNames[partKey] = newName.trim();
+            saveState();
+            renderMeasurements();
+        } else {
+            const inputElement = document.querySelector(`.field-name-input[data-part="${partKey}"]`);
+            if(inputElement) {
+                inputElement.value = appState.measurementFieldNames[partKey] || partKey;
+            }
+        }
+    }
+
+    function setupMeasurementTooltip() {
+        dom.measurementInputView.addEventListener('mouseover', e => {
+            if (e.target.classList.contains('info-icon')) {
+                const part = e.target.dataset.part;
+                dom.measurementTooltip.textContent = measurementInstructions[part] || 'No information available.';
+                dom.measurementTooltip.style.display = 'block';
+            }
+        });
+        dom.measurementInputView.addEventListener('mouseout', e => {
+            if (e.target.classList.contains('info-icon')) {
+                dom.measurementTooltip.style.display = 'none';
+            }
+        });
+         document.addEventListener('mousemove', e => {
+            if (dom.measurementTooltip.style.display === 'block') {
+                dom.measurementTooltip.style.left = e.pageX + 15 + 'px';
+                dom.measurementTooltip.style.top = e.pageY + 15 + 'px';
+            }
+        });
+    }
+
+    // --- EVENT LISTENERS ---
+    function addEventListeners() {
+        dom.themeSelector.addEventListener('change', handleThemeChange);
+        document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', handleNavClick));
+        dom.openProtocolModalBtn.addEventListener('click', openProtocolModal);
+        dom.closeProtocolModalBtn.addEventListener('click', closeProtocolModal);
+        dom.modalNav.querySelectorAll('a').forEach(link => link.addEventListener('click', handleModalNav));
+        dom.weightForm.addEventListener('submit', handleWeightSubmit);
+        [dom.calorieGoalInput, dom.proteinGoalInput, dom.fatGoalInput, dom.carbGoalInput].forEach(input => input.addEventListener('change', handleGoalChange));
+        dom.logMealForm.addEventListener('submit', handleMealSubmit);
+        dom.mealList.addEventListener('click', handleMealListClick);
+        dom.prevWeekBtn.addEventListener('click', () => { historyWeekStart = localDateFns.subWeeks(historyWeekStart, 1); renderDietHistory(); });
+        dom.nextWeekBtn.addEventListener('click', () => { historyWeekStart = localDateFns.addWeeks(historyWeekStart, 1); renderDietHistory(); });
+        document.querySelectorAll('.diet-view-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.diet-view-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                const isToday = btn.textContent === 'Log';
+                dom.dietTodayView.classList.toggle('hidden', !isToday);
+                dom.dietHistoryView.classList.toggle('hidden', isToday);
+            });
+        });
+        dom.masterDatePicker.addEventListener('change', (e) => {
+            currentDate = new Date(e.target.value + 'T00:00:00');
+            renderAll();
+        });
+        dom.exportDataBtn.addEventListener('click', exportData);
+        dom.importDataBtn.addEventListener('click', () => dom.importDataInput.click());
+        dom.importDataInput.addEventListener('change', importData);
+        dom.calc.calculateBtn.addEventListener('click', calculateAndShowMacros);
+        dom.calc.applyBtn.addEventListener('click', applyCalculatedMacros);
+        dom.saveProtocolTextBtn.addEventListener('click', saveProtocolText);
+        dom.closeAddExerciseModalBtn.addEventListener('click', () => dom.addExerciseModal.style.display = 'none');
+        dom.openFavoritesBtn.addEventListener('click', openFavoritesModal);
+        dom.closeFavoritesModalBtn.addEventListener('click', () => dom.favoriteMealsModal.style.display = 'none');
+
+        if(dom.measurementInputView) { dom.measurementInputView.addEventListener('change', handleMeasurementChange); }
+        dom.manageFieldsModal.addEventListener('click', openManageFieldsModal);
+        dom.closeManageFieldsModalBtn.addEventListener('click', () => dom.manageFieldsModal.style.display = 'none');
+
+        dom.fieldsList.addEventListener('change', (e) => {
+            if (e.target.classList.contains('visibility-toggle')) {
+                handleFieldVisibilityToggle(e);
+            }
+            if (e.target.classList.contains('field-name-input')) {
+                handleEditFieldName(e.target.dataset.part, e.target.value);
+            }
+        });
+
+        setupMeasurementTooltip();
+    }
+
+    // --- IMPORT/EXPORT ---
+    function exportData() {
+        const allData = { appState, workoutData, weightLog, dietLogs, workoutCompletion };
+        const dataStr = JSON.stringify(allData, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        const exportFileDefaultName = 'fitness_app_backup.json';
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    }
+
+    function importData(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                showConfirm("This will overwrite all current data. Are you sure?", () => {
+                    appState = importedData.appState || defaultAppState;
+                    workoutData = importedData.workoutData || defaultWorkoutData;
+                    weightLog = importedData.weightLog || [];
+                    dietLogs = importedData.dietLogs || {};
+                    workoutCompletion = importedData.workoutCompletion || {};
+                    saveState(); initializeApp();
+                    showAlert("Data imported successfully!");
+                });
+            } catch (error) { showAlert("Error reading file."); console.error("Import error:", error); }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    // --- PROTOCOL CALCULATOR ---
+    function calculateAndShowMacros() {
+        const age = parseInt(dom.calc.age.value);
+        const gender = dom.calc.gender.value;
+        const weight = parseFloat(dom.calc.weight.value);
+        const height = parseFloat(dom.calc.height.value);
+        const activity = parseFloat(dom.calc.activity.value);
+        const goalModifier = parseInt(dom.calc.goal.value);
+
+        if (!age || !weight || !height) { showAlert("Please fill in all personal details."); return; }
+
+        const genderModifier = (gender === 'male') ? 5 : -161;
+        const bmr = (10 * weight) + (6.25 * height) - (5 * age) + genderModifier;
+        const tdee = bmr * activity;
+        const targetCalories = Math.round(tdee + goalModifier);
+        const protein = Math.round(weight * 2);
+        const fats = Math.round((targetCalories * 0.25) / 9);
+        const carbs = Math.round((targetCalories - (protein * 4) - (fats * 9)) / 4);
+
+        dom.calc.resultCalories.textContent = `Calories: ~${targetCalories} kcal`;
+        dom.calc.resultProtein.textContent = `Protein: ~${protein} g`;
+        dom.calc.resultFats.textContent = `Fats: ~${fats} g`;
+        dom.calc.resultCarbs.textContent = `Carbs: ~${carbs} g`;
+        dom.calc.results.classList.remove('hidden');
+    }
+
+    function applyCalculatedMacros() {
+        const caloriesText = dom.calc.resultCalories.textContent;
+        const proteinText = dom.calc.resultProtein.textContent;
+        const fatText = dom.calc.resultFats.textContent;
+        const carbText = dom.calc.resultCarbs.textContent;
+
+        if (!caloriesText || !proteinText || !fatText || !carbText) return;
+
+        appState.calorieGoal = parseInt(caloriesText.match(/\d+/)[0]);
+        appState.proteinGoal = parseInt(proteinText.match(/\d+/)[0]);
+        appState.fatGoal = parseInt(fatText.match(/\d+/)[0]);
+        appState.carbGoal = parseInt(carbText.match(/\d+/)[0]);
+
+        saveState(); renderDietLog(); renderCharts();
+        showAlert("New diet goals applied!").then(closeProtocolModal);
+    }
+
+    function saveProtocolText() {
+        appState.protocolText = {
+            nutrition: dom.protocolChapters.nutrition.innerHTML,
+            training: dom.protocolChapters.training.innerHTML,
+            abs: dom.protocolChapters.abs.innerHTML,
+            conclusion: dom.protocolChapters.conclusion.innerHTML
+        };
+        saveState(); showAlert("Protocol text saved!");
+    }
+
+    function renderProtocolText() {
+        if (appState.protocolText && Object.keys(appState.protocolText).length > 0) {
+            dom.protocolChapters.nutrition.innerHTML = appState.protocolText.nutrition;
+            dom.protocolChapters.training.innerHTML = appState.protocolText.training;
+            dom.protocolChapters.abs.innerHTML = appState.protocolText.abs;
+            dom.protocolChapters.conclusion.innerHTML = appState.protocolText.conclusion;
+        }
+    }
+
+    // --- START THE APP ---
+    initializeApp();
+});
+    </script>
+</body>
+</html>
