@@ -74,6 +74,7 @@ class AssistantApp:
         self.recorder_process = None
         self.last_ai_response = ""
         self.is_speaking = threading.Event()
+        self.stop_tts_event = threading.Event()
 
         # --- UI Layout using .grid() ---
         self.root.grid_rowconfigure(0, weight=0)  # Title
@@ -234,9 +235,8 @@ class AssistantApp:
 
     def on_skip_press(self):
         if self.current_state == AppState.SPEAKING:
-            if self.tts_engine and getattr(self.tts_engine, '_inLoop', False):
-                self.tts_engine.stop()
-            self.tts_engine = None  # Discard the faulty engine instance
+            self.stop_tts_event.set()
+            # We also set the state here to make the UI feel instantly responsive
             self.set_state(AppState.IDLE, status_message="Skipped")
 
     def speak(self, text):
@@ -244,19 +244,31 @@ class AssistantApp:
 
         def run_tts():
             self.is_speaking.set()
+            self.stop_tts_event.clear()
             try:
-                # Re-initialize engine if it was discarded
                 if self.tts_engine is None:
                     self._initialize_tts()
 
                 self.set_state(AppState.SPEAKING)
                 clean_text = re.sub(r'[\*_`]', '', text)
                 self.tts_engine.say(clean_text)
-                self.tts_engine.runAndWait()
+
+                # Custom non-blocking loop
+                self.tts_engine.startLoop(False)
+                while self.tts_engine.isBusy() and not self.stop_tts_event.is_set():
+                    self.tts_engine.iterate()
+                    time.sleep(0.1)
+                self.tts_engine.endLoop()
+                # If the loop was stopped manually, the engine might be in a bad state
+                if self.stop_tts_event.is_set():
+                    self.tts_engine = None
+
             except Exception as e:
                 self.set_state(AppState.ERROR, status_message=f"TTS Error: {e}")
+                self.tts_engine = None # Discard engine on any error
             finally:
                 self.is_speaking.clear()
+                self.stop_tts_event.clear()
                 if self.current_state == AppState.SPEAKING:
                     self.set_state(AppState.IDLE)
 
